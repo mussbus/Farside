@@ -1,0 +1,57 @@
+.selection {
+  font-size: 1.6rem;
+
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 0.7rem;
+
+    &-number {
+      display: grid;
+      grid-template-columns: 2.8rem auto;
+      column-gap: 0.6rem;
+      list-style: none;
+      font-size: $grid-font-size;
+    }
+
+    &__point,
+    &__team {
+      font-size: inherit;
+      // width: 15%;
+    }
+  }
+  &__game {
+    background-color: $color-secondary-light;
+    border-radius: 1rem;
+    padding: 0.8rem 1.6rem;
+
+    &-date {
+      grid-column: full-start / full-end;
+      display: flex;
+      justify-content: space-between;
+    }
+    &-choice {
+      grid-column: right-start / right-end;
+      display: inline-block;
+      border-radius: 0.3rem;
+      font-size: inherit;
+      color: inherit;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    &-day,
+    &-time {
+      font-size: inherit;
+    }
+    &-team {
+      grid-column: left-start / center-end;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &__form {
+    padding: 0 3rem;
+  }
+}

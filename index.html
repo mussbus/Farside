@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farside</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script defer src="js/grid.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <nav class="navigation">
+      <span class="navigation__edge">
+        <img src="img/Logo.jpg" alt="logo" class="navigation__logo" />
+      </span>
+      <span class="navigation__main">
+        <ul class="navigation__list">
+          <li class="navigation__list-item">
+            <a href="#" class="navigation__link">link 1</a>
+          </li>
+          <li class="navigation__list-item">
+            <a href="#" class="navigation__link">link 2</a>
+          </li>
+          <li class="navigation__list-item">
+            <a href="#" class="navigation__link">link 3</a>
+          </li>
+          <li class="navigation__list-item">
+            <a href="#" class="navigation__link">link 4</a>
+          </li>
+          <li class="navigation__list-item">
+            <a href="#" class="navigation__link">link 5</a>
+          </li>
+        </ul>
+      </span>
+      <span class="navigation__edge">
+        <a href="#" class="navigation__link-help">Help</a>
+      </span>
+    </nav>
+    <!-- <header class="header">
+      <div class="container">
+        <h1 class="heading-primary">Come suffer the pain of failure</h1>
+      </div>
+    </header> -->
+    <main>
+      <section class="selection u-margin-top-md">
+        <form action="" class="selection__form">
+          <div class="container grid grid__col-1-5">
+            <div class="selection__picks">
+              <ul class="selection__list">
+                <li class="selection__list-number">
+                  <div class="selection__list-point">16.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">15.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">14.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">13.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">12.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">11.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">10.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">9.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">8.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">7.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">6.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">5.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">4.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">3.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">2.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+                <li class="selection__list-number">
+                  <div class="selection__list-point">1.</div>
+                  <div class="selection__list-team"></div>
+                </li>
+              </ul>
+            </div>
+            <div class="selection__schedule grid grid__schedule">
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Thursday</label>
+                  <label class="selection__game-time">7:15pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  Buffalo Bills
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Los Angeles Rams
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">12:00pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  New Orleans Saints
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Atlanta Falcons
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">12:00pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  Cleveland Browns
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Carolina Panthers
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">12:00pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  San Francisco 49ers
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Chicago Bears
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">12:00pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  Pittsburgh Steelers
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Cinncinati Bengals
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">12:00pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  Philadelphia Eagles
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Detroit Lions
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">12:00pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  Indianapolis Colts
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Houston Texans
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">12:00pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  New England Patriots
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Miami Dolphins
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">12:00pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  Baltimore Ravens
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  New York Jets
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">12:00pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  Jacksonville Jaguars
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Washington Commanders
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">3:05pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  New York Giants
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Tennessee Titans
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">3:05pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  Kansas City Chiefs
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Arizona Cardinals
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">3:25pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  Las Vegas Raiders
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Los Angeles Chargers
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">3:25pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  Green Bay Packers
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Minnesota Vikings
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Sunday</label>
+                  <label class="selection__game-time">7:20pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  Tampa Bay Buccaneers
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Dallas Cowboys
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+              <div class="selection__game grid grid__game">
+                <div class="selection__game-date">
+                  <label class="selection__game-day">Monday</label>
+                  <label class="selection__game-time">7:15pm</label>
+                </div>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="away"
+                >
+                  Denver Broncos
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="away"
+                ></select>
+                <label
+                  class="selection__game-team"
+                  draggable="true"
+                  data-team="home"
+                >
+                  Seattle Seahawks
+                </label>
+                <select
+                  name=""
+                  id=""
+                  class="selection__game-choice"
+                  data-point="home"
+                ></select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

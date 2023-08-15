@@ -1,0 +1,11 @@
+.drag {
+  &__bgc {
+    background-color: rgba($color-grey-dark-1, 0.3);
+  }
+  &__half-opacity {
+    opacity: 0.5;
+  }
+  &__bold {
+    font-weight: 700;
+  }
+}

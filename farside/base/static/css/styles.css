@@ -1,0 +1,273 @@
+/*
+0 - 600px:      Phone
+600 - 900px:    Tablet portrait
+900 - 1200px:   Tablet landscape
+[1200 - 1800] is where our normal styles apply
+1800px + :      Big desktop
+
+$breakpoint arguement choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+ORDER: Base + typography > general layout + grid > page layout > components
+
+1em = 16px
+*/
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  position: relative;
+}
+
+::selection {
+  background-color: #a21521;
+  color: #fff;
+}
+
+body {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #333;
+}
+
+.heading-primary {
+  font-size: 4rem;
+  color: #fff;
+  line-height: 1.2;
+  letter-spacing: 0.2rem;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.heading-secondary {
+  font-size: 4rem;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.heading-tertiary {
+  font-size: 4rem;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.paragraph {
+  font-size: 1.6rem;
+}
+.paragraph:not(:last-child) {
+  margin-bottom: 3rem;
+}
+
+.u-center-text {
+  text-align: center !important;
+}
+
+.u-margin-bottom-small {
+  margin-bottom: 1.5rem !important;
+}
+
+.u-margin-bottom-medium {
+  margin-bottom: 4rem !important;
+}
+@media only screen and (max-width: 56.25em) {
+  .u-margin-bottom-medium {
+    margin-bottom: 3rem !important;
+  }
+}
+
+.u-margin-bottom-big {
+  margin-bottom: 8rem !important;
+}
+@media only screen and (max-width: 56.25em) {
+  .u-margin-bottom-big {
+    margin-bottom: 5rem !important;
+  }
+}
+
+.u-margin-top-sm {
+  margin-top: 2rem !important;
+}
+
+.u-margin-top-md {
+  margin-top: 5rem !important;
+}
+
+.u-margin-top-bg {
+  margin-top: 8rem !important;
+}
+
+.u-margin-top-hg {
+  margin-top: 10rem !important;
+}
+
+.u-bgc-green {
+  background-color: rgb(0, 200, 0) !important;
+}
+
+.container {
+  max-width: 160rem;
+  margin: 0 auto;
+  padding: 10rem;
+  min-height: 80vh;
+  background-color: #e32636;
+}
+
+.drag__bgc {
+  background-color: rgba(119, 119, 119, 0.3);
+}
+.drag__half-opacity {
+  opacity: 0.5;
+}
+.drag__bold {
+  font-weight: 700;
+}
+
+.modal {
+  width: 100rem;
+  height: 100rem;
+  background-color: #fff;
+  position: absolute;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 1.2rem;
+  box-shadow: 0rem 2rem 2rem rgba(0, 0, 0, 0.3);
+}
+.modal__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 0.7rem;
+  padding: 3rem;
+}
+.modal__list-number {
+  display: grid;
+  grid-template-columns: 2.8rem auto;
+  column-gap: 0.6rem;
+  list-style: none;
+  font-size: 1.8rem;
+}
+.modal__list-point, .modal__list-team {
+  font-size: inherit;
+}
+.modal__hidden {
+  opacity: 0;
+  display: none;
+}
+
+.footer {
+  background-color: #333;
+  font-size: 1.4rem;
+  color: #f7f7f7;
+  display: flex;
+  justify-content: center;
+  min-height: 30vh;
+  width: 100%;
+  padding: 10rem 0;
+}
+@media only screen and (max-width: 56.25em) {
+  .footer {
+    padding: 8rem 0;
+  }
+}
+.footer__logo-box {
+  text-align: center;
+  margin-bottom: 8rem;
+}
+@media only screen and (max-width: 56.25em) {
+  .footer__logo-box {
+    margin-bottom: 6rem;
+  }
+}
+.footer__logo {
+  width: 15rem;
+  height: auto;
+}
+.footer__list {
+  list-style: none;
+  display: flex;
+}
+.footer__item {
+  display: inline-block;
+  padding: 0 11rem;
+}
+.footer__link:link, .footer__link:visited {
+  color: #f7f7f7;
+  background-color: #333;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+}
+.footer__link:hover, .footer__link:active {
+  color: #a21521;
+}
+.footer__copyright {
+  border-top: 1px solid #777;
+  padding-top: 2rem;
+  width: 80%;
+  float: right;
+}
+@media only screen and (max-width: 56.25em) {
+  .footer__copyright {
+    width: 100%;
+    float: none;
+  }
+}
+
+.grid {
+  display: grid;
+}
+
+.nav {
+  height: 5rem;
+  background-color: #f6c665;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.nav__list {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav__item {
+  height: 100%;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav__link:link, .nav__link:visited {
+  text-decoration: none;
+  display: inline-block;
+  padding: 0 2.5rem;
+  color: #a21521;
+  text-transform: capitalize;
+  font-size: 3.2rem;
+  transition: all 0.75s;
+}
+.nav__link:hover {
+  color: #fff;
+  transform: translateY(-0.2rem);
+}
+.nav__link:active {
+  color: #fff;
+  transform: translateY(-0.1rem);
+}
+
+/*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,43 @@
+.nav {
+    height: 5rem;
+    background-color: $color-secondary-light;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    &__list {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    &__item {
+        height: 100%;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__link {
+        &:link,
+        &:visited {
+            text-decoration: none;
+            display: inline-block;
+            padding: 0 2.5rem;
+            color: $color-primary;
+            text-transform: capitalize;
+            font-size: 3.2rem;
+            transition: all 0.75s;
+        }
+
+        &:hover {
+            color: $color-white;
+            transform: translateY(-0.2rem);
+        }
+        &:active {
+            color: $color-white;
+            transform: translateY(-0.1rem);
+        }
+    }
+}

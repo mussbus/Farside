@@ -1,0 +1,38 @@
+.modal {
+  width: 100rem;
+  height: 100rem;
+  background-color: $color-white;
+  position: absolute;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 1.2rem;
+  box-shadow: 0rem 2rem 2rem rgba($color-black, 0.3);
+
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 0.7rem;
+    padding: 3rem;
+
+    &-number {
+      display: grid;
+      grid-template-columns: 2.8rem auto;
+      column-gap: 0.6rem;
+      list-style: none;
+      font-size: $grid-font-size;
+    }
+
+    &-point,
+    &-team {
+      font-size: inherit;
+      // width: 15%;
+    }
+  }
+
+  &__hidden {
+    opacity: 0;
+    display: none;
+  }
+}

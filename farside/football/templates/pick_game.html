@@ -1,0 +1,33 @@
+{% extends 'base_main.html' %} {% load static %} {% block title %}Pick Game{% endblock %} {% block scripts %}
+<script defer src="{% static 'js/pick.js' %}" type="text/javascript"></script>
+{% endblock %}{% block content %}
+
+<h1 class="header__one">Whom is this?</h1>
+
+<form method="POST">
+    {% csrf_token %} {% for game in games_list %}
+    <div class="pick__grid">
+        <div class="game" data-game="{{game.game_id}}">
+            <label class="label" data-team="away">{{game.away_team.location}} {{game.away_team.name}}</label>
+            <select data-point="away" data-team="{{game.away_team.team_id}}" class="team_select">
+                <option value="-1">---</option>
+                {% for games in games_list%}
+                <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                {% endfor %}
+            </select>
+            <label for="{{game.home_team.location}}-{{game.home_team.name}}" class="label" data-team="home"
+                >{{game.home_team.location}} {{game.home_team.name}}</label
+            >
+            <select data-point="home" data-team="{{game.home_team.team_id}}" class="team_select">
+                <option value="-1">---</option>
+                {% for games in games_list%}
+                <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                {% endfor %}
+            </select>
+            <span class="u-hidden-input">{% for field in form %} {{ field }} {% endfor %}</span>
+        </div>
+        {% endfor %}
+    </div>
+    <input type="submit" />
+</form>
+{% endblock %}

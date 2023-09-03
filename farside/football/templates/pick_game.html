@@ -4,7 +4,7 @@
 
 <h1 class="header__one">Whom is this?</h1>
 
-<form method="POST">
+<form method="POST" novalidate>
     {% csrf_token %} {% for game in games_list %}
     <div class="pick__grid">
         <div class="game" data-game="{{game.game_id}}">

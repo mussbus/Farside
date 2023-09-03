@@ -5,6 +5,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="google" value="notranslate" />
         <title>{% block title %} {% endblock %}</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -14,8 +15,10 @@
         {% block scripts %}{% endblock %}
     </head>
     <body>
-        {% block navigation %} {% endblock %}
-        <div class="container">{% block content %} {% endblock %}</div>
+        {% block navigation %} {% endblock %}        
+        <div class="container">
+            {% block content %} {% endblock %}
+        </div>
         {% block footer %} {% endblock %}
     </body>
 </html>

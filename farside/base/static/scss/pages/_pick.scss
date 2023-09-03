@@ -1,0 +1,54 @@
+.pick {
+    &__action {
+        &-row {
+            display: flex;
+            justify-content: end;
+            gap: 5rem;
+        }
+    }
+    &__choice {
+        grid-column: right-start / right-end;
+        display: inline-block;
+        border-radius: 0.3rem;
+        font-size: inherit;
+        color: inherit;
+        &:hover {
+            cursor: pointer;
+        }
+
+        & > option {
+            text-align: center;
+        }
+    }
+
+    &__date {
+        grid-column: full-start / full-end;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__game {
+        background-color: $color-secondary-light;
+        border-radius: 1rem;
+        padding: 0.8rem 1.6rem;
+        box-shadow: 0rem 1rem 2rem rgba($color-black, 0.2);
+        font-size: $default-font-size;
+        // border: 0.2rem solid $color-black;
+        outline: 0.2rem solid rgba($color-black, 1);
+    }
+    &__schedule {
+    }
+    &__team {
+        grid-column: left-start / center-end;
+        justify-self: left;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__tiebreaker {
+        &-label {
+            text-transform: capitalize;
+            font-size: $grid-font-size;
+        }
+    }
+}

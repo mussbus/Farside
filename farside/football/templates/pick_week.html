@@ -1,0 +1,66 @@
+{% extends 'base_main.html' %}
+{% load static %}
+
+{% block title %}Pick Game{% endblock %} 
+
+{% block scripts %}
+    <script defer src="{% static 'js/pick_week.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+<h1 class="primary__header">Week 1</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="grid grid__schedule pick__schedule u-margin-bottom-medium">
+            {% for game in games_list %}
+            <div class="pick__game grid grid__game" data-game="{{game.game_id}}">
+                <div class="pick__date">
+                    <span class="pick__day">{{game.start_time|date:'l'}}</span>
+                    <span class="pick__time">{{game.start_time|date:'g:i A'}}</span>
+                </div>
+                <label for="{{game.away_team.location}}-{{game.away_team.name}}" 
+                    class="pick__team" data-team="away">
+                    {{game.away_team.location}} {{game.away_team.name}}
+                </label>
+                <select id="{{game.away_team.location}}-{{game.away_team.name}}" 
+                    data-point="away" data-team="{{game.away_team.team_id}}" class="pick__choice">
+                    <option value="-1">---</option>
+                    {% for games in games_list%}
+                        <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                    {% endfor %}
+                </select>
+                <label for="{{game.home_team.location}}-{{game.home_team.name}}" 
+                    class="pick__team" data-team="home">
+                    {{game.home_team.location}} {{game.home_team.name}}
+                </label>
+                <select id="{{game.home_team.location}}-{{game.home_team.name}}" 
+                    data-point="home" data-team="{{game.home_team.team_id}}" class="pick__choice">
+                    <option value="-1">---</option>
+                    {% for games in games_list%}
+                        <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                    {% endfor %}
+                </select>
+                <span class="u-hidden-input">
+                    {% for form in formset %} 
+                        {% if forloop.parentloop.counter == forloop.counter%} 
+                            {% for field in form %}
+                                {{ field }} 
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {{formset.management_form}}
+        <div class="pick__action-row">
+            <span>
+                {% for field in form_tiebreaker %} 
+                    <label for="{{field.auto_id}}" class="pick__tiebreaker-label">{{field.label}}:</label>
+                    {{field}}
+                {% endfor %}
+            </span>
+            <input class="btn" type="submit" />
+        </div>
+    </form>
+{% endblock %}

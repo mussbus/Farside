@@ -3,7 +3,7 @@
     background-color: $color-secondary-light;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 
     &__list {
         height: 100%;
@@ -40,4 +40,10 @@
             transform: translateY(-0.1rem);
         }
     }
+
+    // &__admin {
+    //     &-link {
+    //         text-decoration: none;
+    //     }
+    // }
 }

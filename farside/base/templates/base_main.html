@@ -1,24 +1,35 @@
-{% extends 'base_generic.html' %}{% load static %}{% block title %}aaa{% endblock %} {% block scripts %}{% endblock %}
+{% extends 'base_generic.html' %}
+
+{% load static %}
+
+{% block title %}{% endblock %} 
+{% block scripts %}{% endblock %}
 {% block navigation %}
+    <nav class="nav">
+        <span class="nav__logo"></span>
+        <ul class="nav__list">
+            <li class="nav__item"><a href="{{current_week}}" class="nav__link">Current Week</a></li>
+            <li class="nav__item"><a href="#" class="nav__link">Test Link</a></li>
+            <li class="nav__item"><a href="#" class="nav__link">Test Link</a></li>
+            <li class="nav__item"><a href="#" class="nav__link">Test Link</a></li>
+            <li class="nav__item"><a href="#" class="nav__link">Test Link</a></li>
+        </ul>
+        <span class="nav__profile">
+            <a href="/admin" class="nav__link">Admin</a>
+        </span>
+    </nav>
+{% endblock %}
 
-<nav class="nav">
-    <ul class="nav__list">
-        <li class="nav__item"><a href="#" class="nav__link">Test Link</a></li>
-        <li class="nav__item"><a href="#" class="nav__link">Test Link</a></li>
-        <li class="nav__item"><a href="#" class="nav__link">Test Link</a></li>
-        <li class="nav__item"><a href="#" class="nav__link">Test Link</a></li>
-        <li class="nav__item"><a href="#" class="nav__link">Test Link</a></li>
-    </ul>
-</nav>
+{% block content %}{% endblock %} 
 
-{% endblock %} {% block content %}{% endblock %} {% block footer %}
-<footer class="footer">
-    <ul class="footer__list">
-        <li class="footer__item"><a href="#" class="footer__link">TestLink</a></li>
-        <li class="footer__item"><a href="#" class="footer__link">TestLink</a></li>
-        <li class="footer__item"><a href="#" class="footer__link">TestLink</a></li>
-        <li class="footer__item"><a href="#" class="footer__link">TestLink</a></li>
-        <li class="footer__item"><a href="#" class="footer__link">TestLink</a></li>
-    </ul>
-</footer>
+{% block footer %}
+    <footer class="footer">
+        <ul class="footer__list">
+            <li class="footer__item"><a href="#" class="footer__link">TestLink</a></li>
+            <li class="footer__item"><a href="#" class="footer__link">TestLink</a></li>
+            <li class="footer__item"><a href="#" class="footer__link">TestLink</a></li>
+            <li class="footer__item"><a href="#" class="footer__link">TestLink</a></li>
+            <li class="footer__item"><a href="#" class="footer__link">TestLink</a></li>
+        </ul>
+    </footer>
 {% endblock %}

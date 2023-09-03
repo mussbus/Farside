@@ -1,35 +1,36 @@
 body {
-  font-family: 'Rubik', sans-serif;
-  font-weight: 400;
-  line-height: 1.7;
-  color: $color-grey-dark-3;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    color: $color-grey-dark-3;
+    font-size: $default-font-size;
 }
 
 .heading-primary {
-  font-size: 4rem;
-  color: $color-white;
-  line-height: 1.2;
-  letter-spacing: 0.2rem;
-  text-transform: capitalize;
-  font-weight: 500;
+    font-size: 4rem;
+    color: $color-white;
+    line-height: 1.2;
+    letter-spacing: 0.2rem;
+    text-transform: capitalize;
+    font-weight: 500;
 }
 
 .heading-secondary {
-  font-size: 4rem;
-  color: $color-white;
-  line-height: 1.2;
+    font-size: 4rem;
+    color: $color-white;
+    line-height: 1.2;
 }
 
 .heading-tertiary {
-  font-size: 4rem;
-  color: $color-white;
-  line-height: 1.2;
+    font-size: 4rem;
+    color: $color-white;
+    line-height: 1.2;
 }
 
 .paragraph {
-  font-size: $default-font-size;
+    font-size: $default-font-size;
 
-  &:not(:last-child) {
-    margin-bottom: 3rem;
-  }
+    &:not(:last-child) {
+        margin-bottom: 3rem;
+    }
 }

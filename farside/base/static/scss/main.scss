@@ -7,10 +7,14 @@
 @import 'base/typography';
 @import 'base/utilities';
 
+@import 'components/btn';
 @import 'components/container';
 @import 'components/drag';
+@import 'components/input';
 @import 'components/modal';
 
 @import 'layouts/footer';
 @import 'layouts/grid';
 @import 'layouts/nav';
+
+@import 'pages/pick';

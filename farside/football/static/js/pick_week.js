@@ -13,7 +13,14 @@ const checkGameSelection = (c) => {
             clearPoint(team);
         }
     });
+    if (c.value > -1) {
+        team_select.forEach((team) => {
+            if (c.value === team.value)
+                if (c.previousElementSibling.textContent != team.previousElementSibling.textContent) team.value = -1;
+        });
+    }
 };
+
 const checkGameGrid = (c) => {
     const nameReplaced = checkListTeam(c);
     gameTeam.forEach((team) => {

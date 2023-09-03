@@ -42,7 +42,6 @@ body {
   font-weight: 400;
   line-height: 1.7;
   color: #333;
-  font-size: 1.6rem;
 }
 
 .heading-primary {
@@ -123,19 +122,12 @@ body {
   display: none;
 }
 
-.btn {
-  height: 4rem;
-  width: 12rem;
-  border-radius: 0.5rem;
-  background-color: #e9855d;
-}
-
 .container {
   max-width: 160rem;
   margin: 0 auto;
   padding: 10rem;
   min-height: 80vh;
-  background-color: #fff;
+  background-color: #e32636;
 }
 
 .drag__bgc {
@@ -146,13 +138,6 @@ body {
 }
 .drag__bold {
   font-weight: 700;
-}
-
-.input__tiebreaker {
-  text-align: right;
-  font-size: 1.6rem;
-  height: 4rem;
-  width: 12rem;
 }
 
 .modal {
@@ -253,7 +238,8 @@ body {
 .grid__schedule {
   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
   align-content: start;
-  gap: 1.6rem;
+  row-gap: 2.5rem;
+  column-gap: 1.5rem;
 }
 @media only screen and (max-width: 37.5em) {
   .grid__schedule {
@@ -265,9 +251,7 @@ body {
   align-content: start;
   row-gap: 2rem;
   column-gap: 2rem;
-}
-.grid-day, .grid-time {
-  font-size: inherit;
+  border: 0.1rem solid #000;
 }
 
 .nav {
@@ -275,7 +259,7 @@ body {
   background-color: #f6c665;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .nav__list {
   height: 100%;
@@ -308,47 +292,11 @@ body {
   transform: translateY(-0.1rem);
 }
 
-.pick__action-row {
-  display: flex;
-  justify-content: end;
-  gap: 5rem;
-}
-.pick__choice {
-  grid-column: right-start/right-end;
-  display: inline-block;
-  border-radius: 0.3rem;
-  font-size: inherit;
-  color: inherit;
-}
-.pick__choice:hover {
-  cursor: pointer;
-}
-.pick__choice > option {
-  text-align: center;
-}
-.pick__date {
-  grid-column: full-start/full-end;
-  display: flex;
-  justify-content: space-between;
-}
 .pick__game {
   background-color: #f6c665;
   border-radius: 1rem;
   padding: 0.8rem 1.6rem;
   box-shadow: 0rem 1rem 2rem rgba(0, 0, 0, 0.2);
-  font-size: 1.6rem;
-  outline: 0.2rem solid black;
-}
-.pick__team {
-  grid-column: left-start/center-end;
-  justify-self: left;
-}
-.pick__team:hover {
-  cursor: pointer;
-}
-.pick__tiebreaker-label {
-  text-transform: capitalize;
-  font-size: 1.8rem;
 }
 
-/*# sourceMappingURL=styles.css.map */
+/*# sourceMappingURL=css.styles.css.map */

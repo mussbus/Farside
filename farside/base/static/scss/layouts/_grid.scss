@@ -1,8 +1,28 @@
 .grid {
-    &__picks {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 3rem;
-        margin: 2.5rem 0;
+    display: grid;
+
+    &__schedule {
+        grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+        align-content: start;
+        gap: 1.6rem;
+
+        @media only screen and (max-width: $bp-small) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__game {
+        grid-template-columns:
+            [full-start left-start] 5rem
+            [left-end center-start] minmax(6rem, 1fr)
+            [center-end right-start] 5rem [right-end full-end];
+        align-content: start;
+        row-gap: 2rem;
+        column-gap: 2rem;
+    }
+
+    &-day,
+    &-time {
+        font-size: inherit;
     }
 }

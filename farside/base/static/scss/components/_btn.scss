@@ -2,5 +2,28 @@
     height: 4rem;
     width: 12rem;
     border-radius: 0.5rem;
-    background-color: $color-tertiary-light;
+    border: 0.1rem solid $color-black;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &__submit {
+        background-color: $color-secondary-light;
+
+        &:hover {
+            background-color: $color-secondary;
+        }
+    }
+
+    &__clear {
+        background-color: $color-grey-light-2;
+
+        &:hover {
+            background-color: $color-grey-dark-2;
+        }
+    }
 }

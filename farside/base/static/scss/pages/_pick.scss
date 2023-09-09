@@ -11,7 +11,8 @@
         display: inline-block;
         border-radius: 0.3rem;
         font-size: inherit;
-        color: inherit;
+        background-color: $color-white;
+        border: 0.1rem solid green;
         &:hover {
             cursor: pointer;
         }
@@ -27,13 +28,14 @@
         justify-content: space-between;
     }
     &__game {
-        background-color: $color-secondary-light;
+        background-color: $color-grey-light-1;
         border-radius: 1rem;
         padding: 0.8rem 1.6rem;
-        box-shadow: 0rem 1rem 2rem rgba($color-black, 0.2);
+        box-shadow: 0rem 1rem 2rem rgba(green, 0.8);
         font-size: $default-font-size;
         // border: 0.2rem solid $color-black;
-        outline: 0.2rem solid rgba($color-black, 1);
+        // outline: 0.3rem solid $color-primary;
+        outline: 0.3rem solid green;
     }
     &__schedule {
     }

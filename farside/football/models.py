@@ -73,7 +73,7 @@ class Pick(models.Model):
   submit_date = models.DateTimeField(default=datetime.datetime.now())
   
   def __str__(self):
-    return f"{self.user.first_name}{self.user.last_name} put {self.value} on the {self.team.location} {self.team.name} to win in Week {self.week.week}"
+    return f"{self.user.first_name} {self.user.last_name} put {self.value} on the {self.team.location} {self.team.name} to win in Week {self.week.week}"
   
   
 class Game(models.Model):
@@ -97,7 +97,7 @@ class Game(models.Model):
   game_status = models.CharField(max_length=1, choices=QUARTERS, blank=True, default='N')
   
   def __str__(self):
-    return f"{self.week.season.year} Season Week {self.week.week} {self.away_team.abbreviation} at {self.home_team.abbreviation}"
+    return f"Week {self.week.week} {self.week.season.year} {self.away_team.abbreviation} at {self.home_team.abbreviation}"
   
   class Meta:
     ordering = ['week', 'start_time', 'game_id']

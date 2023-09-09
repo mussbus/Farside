@@ -1,0 +1,19 @@
+{% extends 'base_main.html' %} 
+
+{% block title %}
+  Results List
+{% endblock %} 
+
+{% block scripts %}
+
+{% endblock %} 
+
+{% block content %} 
+  <div class="grid grid__results">
+    {% for week in week_list %}
+      <a href="/football/results/{{week.season.year}}/week/{{week.week}}" class="result__week">
+        Week {{week.week}}
+      </a>
+    {% endfor %}
+  </div>
+{% endblock %}

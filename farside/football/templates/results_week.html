@@ -1,0 +1,38 @@
+{% extends 'base_main.html' %} 
+
+{% block title %}
+  Result
+{% endblock %} 
+
+{% block scripts %}
+
+{% endblock %} 
+
+{% block content %}
+  <table class="result__table" cellspacing="0" cellpadding="0">
+    {% for team_name, win, team in table_row_matrix %}
+      {% if win == 1 %}
+      <tr class="result__table-row result__table-row-win">
+      {% else %}
+        <tr class="result__table-row">
+      {% endif %}
+        <th class="result__table-header">
+          {{team_name}}
+        </th>
+        {% for pick in team %} 
+          <td class="result__table-cell">
+            {% if pick > 0 %}
+              {{pick}}      
+            {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    <tr class="result__table-row">
+      <th class="result__table-header">Points</th>
+      {% for sum in sum_matrix%}
+        <td class="result__table-cell">{{sum}}</td>
+      {% endfor %}
+    </tr>
+  </table>
+{% endblock %}

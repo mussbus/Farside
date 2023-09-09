@@ -1,0 +1,41 @@
+.result {
+    &__season {
+        display: flex;
+        flex-direction: column;
+        gap: 5rem;
+    }
+
+    &__week {
+    }
+
+    &__table {
+        margin-inline: auto;
+        font-size: 1.4rem;
+        // border: 0.1rem solid red;
+
+        &-row {
+            &:nth-child(odd) {
+                margin-top: 2rem;
+            }
+
+            &:nth-child(even) {
+                background-color: $color-grey-light-2;
+                margin-bottom: 2rem;
+            }
+
+            &-win {
+                outline: 0.1rem dotted green;
+            }
+        }
+
+        &-cell {
+            padding-inline: 0.5rem;
+        }
+
+        &-header {
+            padding-right: 1rem;
+            padding-left: 0.5rem;
+            text-align: left;
+        }
+    }
+}

@@ -31,4 +31,4 @@ class TiebreakerForm(ModelForm):
   class Meta:
     model = Tiebreaker
     fields = ['tiebreaker_points']
-    widgets = {'tiebreaker_points':forms.NumberInput(attrs={'class': 'input__tiebreaker'})}
+    widgets = {'tiebreaker_points':forms.NumberInput(attrs={'class': 'input__number'})}

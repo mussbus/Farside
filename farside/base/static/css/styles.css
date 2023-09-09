@@ -47,7 +47,7 @@ body {
 
 .heading-primary {
   font-size: 4rem;
-  color: #fff;
+  color: #a21521;
   line-height: 1.2;
   letter-spacing: 0.2rem;
   text-transform: capitalize;
@@ -127,7 +127,25 @@ body {
   height: 4rem;
   width: 12rem;
   border-radius: 0.5rem;
-  background-color: #e9855d;
+  border: 0.1rem solid #000;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+.btn:hover {
+  cursor: pointer;
+}
+.btn__submit {
+  background-color: #f6c665;
+}
+.btn__submit:hover {
+  background-color: #f2af29;
+}
+.btn__clear {
+  background-color: #eee;
+}
+.btn__clear:hover {
+  background-color: #999;
 }
 
 .container {
@@ -148,11 +166,33 @@ body {
   font-weight: 700;
 }
 
-.input__tiebreaker {
-  text-align: right;
+.input__number {
+  text-align: center;
   font-size: 1.6rem;
+  font-weight: 400;
   height: 4rem;
   width: 12rem;
+  outline: 0.1rem solid #000;
+  border-radius: 0.23rem;
+  border: none;
+}
+.input__number:hover {
+  outline: 0.2rem solid #e9855d;
+}
+.input__number:focus {
+  outline: 0.3rem solid #de541e;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 .modal {
@@ -253,7 +293,7 @@ body {
 .grid__schedule {
   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
   align-content: start;
-  gap: 1.6rem;
+  gap: 3.2rem;
 }
 @media only screen and (max-width: 37.5em) {
   .grid__schedule {
@@ -269,13 +309,20 @@ body {
 .grid-day, .grid-time {
   font-size: inherit;
 }
+.grid__results {
+  grid-template-rows: repeat(auto-fit, minmax(5rem, 1fr));
+  align-content: start;
+  justify-content: center;
+}
 
 .nav {
   height: 5rem;
-  background-color: #f6c665;
+  background-color: #f7f7f7;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
 }
 .nav__list {
   height: 100%;
@@ -294,7 +341,7 @@ body {
   text-decoration: none;
   display: inline-block;
   padding: 0 2.5rem;
-  color: #a21521;
+  color: #000;
   text-transform: capitalize;
   font-size: 3.2rem;
   transition: all 0.75s;
@@ -318,7 +365,8 @@ body {
   display: inline-block;
   border-radius: 0.3rem;
   font-size: inherit;
-  color: inherit;
+  background-color: #fff;
+  border: 0.1rem solid green;
 }
 .pick__choice:hover {
   cursor: pointer;
@@ -332,12 +380,12 @@ body {
   justify-content: space-between;
 }
 .pick__game {
-  background-color: #f6c665;
+  background-color: #f7f7f7;
   border-radius: 1rem;
   padding: 0.8rem 1.6rem;
-  box-shadow: 0rem 1rem 2rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0rem 1rem 2rem rgba(0, 128, 0, 0.8);
   font-size: 1.6rem;
-  outline: 0.2rem solid black;
+  outline: 0.3rem solid green;
 }
 .pick__team {
   grid-column: left-start/center-end;
@@ -349,6 +397,42 @@ body {
 .pick__tiebreaker-label {
   text-transform: capitalize;
   font-size: 1.8rem;
+}
+
+.user__container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 80rem;
+  margin: 0 3rem;
+}
+
+.result__season {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+.result__table {
+  margin-inline: auto;
+  font-size: 1.4rem;
+}
+.result__table-row:nth-child(odd) {
+  margin-top: 2rem;
+}
+.result__table-row:nth-child(even) {
+  background-color: #eee;
+  margin-bottom: 2rem;
+}
+.result__table-row-win {
+  outline: 0.1rem dotted green;
+}
+.result__table-cell {
+  padding-inline: 0.5rem;
+}
+.result__table-header {
+  padding-right: 1rem;
+  padding-left: 0.5rem;
+  text-align: left;
 }
 
 /*# sourceMappingURL=styles.css.map */

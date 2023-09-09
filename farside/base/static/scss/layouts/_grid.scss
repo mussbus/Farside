@@ -4,7 +4,7 @@
     &__schedule {
         grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
         align-content: start;
-        gap: 1.6rem;
+        gap: 3.2rem;
 
         @media only screen and (max-width: $bp-small) {
             grid-template-columns: 1fr;
@@ -24,5 +24,11 @@
     &-day,
     &-time {
         font-size: inherit;
+    }
+
+    &__results {
+        grid-template-rows: repeat(auto-fit, minmax(5rem, 1fr));
+        align-content: start;
+        justify-content: center;
     }
 }

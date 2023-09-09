@@ -1,0 +1,9 @@
+.user {
+    &__container {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        max-width: 80rem;
+        margin: 0 3rem;
+    }
+}

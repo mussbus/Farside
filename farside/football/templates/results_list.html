@@ -1,0 +1,17 @@
+{% extends 'base_main.html' %} 
+
+{% block title %}
+  Results List
+{% endblock %} 
+
+{% block scripts %}
+
+{% endblock %} 
+
+{% block content %} 
+  <div class="grid grid__results">
+    {% for season in season_list %} 
+    <a href="/football/results/{{season.year}}" class="result__season">{{season.year}} Season</a>
+      {% endfor %}
+  </div>
+{% endblock %}

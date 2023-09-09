@@ -42,7 +42,7 @@
                 </select>
                 <span class="u-hidden-input">
                     {% for form in formset %} 
-                        {% if forloop.parentloop.counter == forloop.counter%} 
+                        {% if forloop.parentloop.counter == forloop.counter %} 
                             {% for field in form %}
                                 {{ field }} 
                             {% endfor %}
@@ -60,7 +60,8 @@
                     {{field}}
                 {% endfor %}
             </span>
-            <input class="btn" type="submit" />
+            <input class="btn btn__submit" type="submit" />
+            <button class="btn btn__clear">Clear</button>
         </div>
     </form>
 {% endblock %}

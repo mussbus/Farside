@@ -1,6 +1,5 @@
 'use strict';
-
-const team_select = document.querySelectorAll('.team_select');
+const teams = document.querySelectorAll('.pick__choice');
 
 const clearPoint = (team) => (team.value = -1);
 
@@ -14,7 +13,7 @@ const checkGameSelection = (c) => {
         }
     });
     if (c.value > -1) {
-        team_select.forEach((team) => {
+        teams.forEach((team) => {
             if (c.value === team.value)
                 if (c.previousElementSibling.textContent != team.previousElementSibling.textContent) team.value = -1;
         });
@@ -41,6 +40,11 @@ const SetSaveValues = (choice) => {
     inputWeek.value = 1;
     inputGame.value = choice.parentElement.dataset.game;
     inputTeam.value = choice.dataset.team;
+
+    console.log(inputValue);
+    console.log(inputWeek);
+    console.log(inputGame);
+    console.log(inputTeam);
 };
 
 const checkGamePick = (choice) => {
@@ -55,8 +59,9 @@ const checkPick = (el) => {
     // setBackground(el);
 };
 
-team_select.forEach((team) =>
+teams.forEach((team) =>
     team.addEventListener('change', function (e) {
         checkPick(team);
+        console.log('method');
     })
 );

@@ -1,9 +1,32 @@
 .input {
-    &__tiebreaker {
-        text-align: right;
+    &__number {
+        text-align: center;
         font-size: $default-font-size;
-        // padding: 5rem;
+        font-weight: 400;
         height: 4rem;
         width: 12rem;
+        outline: 0.1rem solid $color-black;
+        // border: 0.1rem solid $color-black;
+        border-radius: 0.23rem;
+        border: none;
+
+        &:hover {
+            outline: 0.2rem solid $color-tertiary-light;
+        }
+        &:focus {
+            outline: 0.3rem solid $color-tertiary;
+        }
     }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type='number'] {
+    appearance: textfield;
+    -moz-appearance: textfield;
 }

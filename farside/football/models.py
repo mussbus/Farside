@@ -115,3 +115,9 @@ class Tiebreaker(models.Model):
   
   class Meta:
     ordering: ['week.season', 'week.week', 'tiebreaker_points']
+    
+class Total(models.Model):
+  total_id = models.BigAutoField(primary_key=True)
+  total = models.IntegerField()
+  user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+  week = models.ForeignKey('Week', on_delete=models.CASCADE, null=True)

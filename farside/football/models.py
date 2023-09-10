@@ -121,3 +121,10 @@ class Total(models.Model):
   total = models.IntegerField()
   user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
   week = models.ForeignKey('Week', on_delete=models.CASCADE, null=True)
+  tiebreaker = models.ForeignKey('Tiebreaker', on_delete=models.CASCADE, null=True)  
+  
+  def __str__(self):
+    return f"{self.user.first_name} {self.user.last_name} had {self.total} points"
+  
+  class Meta:
+    ordering: ['week.season', 'week.week', 'total', 'tiebreaker.tiebreaker_points']

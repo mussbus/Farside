@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('football/', include('football.urls')),
     path('base/', include('base.urls')),
+    path('schedule/', include('schedule.urls')),
     path('register/', user_views.register, name='register'),
-    path('login/', authentication_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('', authentication_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', authentication_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
 ] 

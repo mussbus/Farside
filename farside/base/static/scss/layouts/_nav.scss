@@ -19,6 +19,13 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        transition: all 0.75s;
+
+        &:hover {
+            // color: $color-white;
+            // transform: translateY(-0.2rem);
+            background-color: $color-grey-light-2;
+        }
     }
 
     &__link {
@@ -29,13 +36,14 @@
             padding: 0 2.5rem;
             color: $color-black;
             text-transform: capitalize;
-            font-size: 3.2rem;
+            font-size: 1.6rem;
             transition: all 0.75s;
         }
 
         &:hover {
-            color: $color-white;
-            transform: translateY(-0.2rem);
+            // color: $color-white;
+            // transform: translateY(-0.2rem);
+            // background-color: $color-grey-dark-1;
         }
         &:active {
             color: $color-white;

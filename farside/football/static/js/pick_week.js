@@ -1,27 +1,48 @@
 'use strict';
-const teams = document.querySelectorAll('.pick__choice');
+
+const team_list = document.querySelectorAll('.input__select');
 
 const clearPoint = (team) => (team.value = -1);
 
-const checkGameSelection = (c) => {
-    const location = c.dataset.point === 'away' ? 'home' : 'away';
-    const game_teams = c.parentElement.querySelectorAll(':scope > select');
+const checkGameSelection = (team) => {
+    const location = team.dataset.location === 'away' ? 'home' : 'away';
+    const game_teams = team.parentElement.querySelectorAll(':scope > select');
     game_teams.forEach((team) => {
-        if (team.dataset.point === location && team.value > 0) {
+        if (team.dataset.location === location && team.value > 0) {
             // removeListTeam(ct.previousElementSibling.textContent);
+            console.log(true);
             clearPoint(team);
         }
     });
-    if (c.value > -1) {
-        teams.forEach((team) => {
-            if (c.value === team.value)
-                if (c.previousElementSibling.textContent != team.previousElementSibling.textContent) team.value = -1;
+    if (team.value > -1) {
+        team_list.forEach((teams) => {
+            if (team.value === teams.value)
+                if (team.previousElementSibling.textContent != teams.previousElementSibling.textContent) {
+                    teams.value = -1;
+                    setBackground(teams);
+                }
         });
     }
 };
 
-const checkGameGrid = (c) => {
-    const nameReplaced = checkListTeam(c);
+const setBackground = (team) => {
+    let valid = true;
+    const game = team.parentElement;
+    const game_teams = game.querySelectorAll(':scope > select');
+
+    if (game_teams[0].value > 0 && game_teams[1].value > 0) valid = false;
+    else if (game_teams[0].value < 0 && game_teams[1].value < 0) valid = false;
+
+    if (valid) {
+        game.classList.add('pick__game-valid');
+        game_teams.forEach((team) => {
+            team.classList.remove('input__error');
+        });
+    } else game.classList.remove('pick__game-valid');
+};
+
+const checkGameGrid = (team) => {
+    const nameReplaced = checkListTeam(team);
     gameTeam.forEach((team) => {
         if (t.textContent === nameReplaced) {
             clearPoint(team.nextElementSibling);
@@ -30,38 +51,27 @@ const checkGameGrid = (c) => {
     });
 };
 
-const SetSaveValues = (choice) => {
-    const inputValue = choice.parentElement.querySelector('.u-hidden-input > .input__value');
-    const inputWeek = choice.parentElement.querySelector('.u-hidden-input > .input__week');
-    const inputGame = choice.parentElement.querySelector('.u-hidden-input > .input__game');
-    const inputTeam = choice.parentElement.querySelector('.u-hidden-input > .input__team');
-
-    inputValue.value = choice.value;
-    inputWeek.value = 1;
-    inputGame.value = choice.parentElement.dataset.game;
-    inputTeam.value = choice.dataset.team;
-
-    console.log(inputValue);
-    console.log(inputWeek);
-    console.log(inputGame);
-    console.log(inputTeam);
-};
-
-const checkGamePick = (choice) => {
-    checkGameSelection(choice);
-    SetSaveValues(choice);
+const checkGamePick = (team) => {
+    checkGameSelection(team);
     // checkGameGrid(choice);
 };
 
-const checkPick = (el) => {
-    checkGamePick(el);
-    // setList(el);
-    // setBackground(el);
+const checkPick = (team) => {
+    checkGamePick(team);
+    setBackground(team);
 };
 
-teams.forEach((team) =>
+team_list.forEach((team) =>
     team.addEventListener('change', function (e) {
         checkPick(team);
-        console.log('method');
     })
 );
+
+const init = () => {
+    team_list.forEach((team) => {
+        setBackground(team);
+        console.log('12');
+    });
+};
+
+init();

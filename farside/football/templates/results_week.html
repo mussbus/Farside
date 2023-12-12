@@ -1,7 +1,7 @@
 {% extends 'base_main.html' %} 
 
 {% block title %}
-  Result
+    Result
 {% endblock %} 
 
 {% block scripts %}
@@ -9,30 +9,57 @@
 {% endblock %} 
 
 {% block content %}
-  <table class="result__table" cellspacing="0" cellpadding="0">
-    {% for team_name, win, team in table_row_matrix %}
-      {% if win == 1 %}
-      <tr class="result__table-row result__table-row-win">
-      {% else %}
-        <tr class="result__table-row">
-      {% endif %}
-        <th class="result__table-header">
-          {{team_name}}
-        </th>
-        {% for pick in team %} 
-          <td class="result__table-cell">
-            {% if pick > 0 %}
-              {{pick}}      
+    {% comment %} <form method='POST'>
+        {% csrf_token %}
+        <button class="btn" name="Test">Test</button>
+    </form> {% endcomment %}
+    <table class="table">
+        <tr class="table__row-small">
+            <th class="table__header"></th>
+            <th class="table__header-name u-center-text">
+                Score
+            </th>
+            {% for user in list_user %} 
+                <th class="table__header-name u-center-text">
+                    {{user.name}}
+                </th>
+            {% endfor %}
+        </tr>
+        {% for team, picks in list_info %} 
+            <tr class="table__row-small {% if team.result == 'win' %}u-bgc-green{% endif %}">
+                <th class="table__header-team">{{team.name}}</th>
+                <td class="table__cell-small u-center-text">{{team.score}}</td>
+                {% for pick in picks %} 
+                    <td class="table__cell-small u-center-text">
+                        {{pick}}
+                    </td>
+                {% endfor %}
+            </tr>
+
+            {% if forloop.counter|divisibleby:2 %}
+                <tr class="table__row-empty">
+                    <th></th>
+                    <td></td>
+                </tr>
             {% endif %}
-          </td>
         {% endfor %}
-      </tr>
-    {% endfor %}
-    <tr class="result__table-row">
-      <th class="result__table-header">Points</th>
-      {% for sum in sum_matrix%}
-        <td class="result__table-cell">{{sum}}</td>
-      {% endfor %}
-    </tr>
-  </table>
+        <tr class="table__row">
+            <th class="table__cell-small">
+                Week Total
+            </th>
+            <td class="table__cell-small"></td>
+            {% for total in list_total_week %} 
+                <td class="table__cell-small u-center-text">{{total}}</td>
+            {% endfor %}
+        </tr>
+        <tr class="table__row">
+            <th class="table__cell-small">
+                Season Total
+            </th>
+            <td class="table__cell-small"></td>
+            {% for total in list_total_season %} 
+                <td class="table__cell-small u-center-text">{{total}}</td>
+            {% endfor %}
+        </tr>
+    </table>
 {% endblock %}

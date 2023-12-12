@@ -1,157 +1,418 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.forms import formset_factory
-from django.db.models import Count
+from django.forms.formsets import formset_factory
+from django.db.models import Count, Sum
 from .forms import *
 from .models import *
+from django.contrib.auth.decorators import login_required
 import datetime
+import random
+from schedule.views import calculate_week_scores
 
 # Create your views here.
 
-def index(request):
-  
-  return render(request, 'index.html', context={})
+def football_index(request):  
+    return render(request, 'football_index.html', context={})
 
-
+# ----------------------------------------------------------------------------------------------------------
 
 def add_team(request):
-  if request.method == 'POST':
-    form = TeamForm(request.POST)
+    if request.method == 'POST':
+        form = TeamForm(request.POST)
     if form.is_valid():
-      form.save()
-      return redirect(reverse('football:index'))
-  else:
-    form = TeamForm()
+        form.save()
+        return redirect(reverse('football:index'))
+    else:
+        form = TeamForm()
       
-  return render(request, 'add_team.html', context={'form':form})
+    return render(request, 'add_team.html', context={'form':form})
 
-
+# ----------------------------------------------------------------------------------------------------------
 
 def pick_game(request):
-  games_list = Game.objects.filter(game_id = 1)
+    games_list = Game.objects.filter(game_id = 1)
   
-  if request.method == 'POST':
-    form = PickForm(request.POST)
-    if form.is_valid():
-      print(True)
-      print(form.cleaned_data)
-      pick = form.save(commit=False)
-      # pick.user = request.user
-      user_save = User.objects.get(id=1)
-      pick.user = user_save
-      pick.submit_date = datetime.datetime.now()
-      pick.save()
-      return redirect(f'/football/season/{year}/week/{week}')
-  else:
-    form = PickForm()
+    if request.method == 'POST':
+        form = PickForm(request.POST)
     
-  return render(request, 'pick_game.html', context={'form':form, 'games_list': games_list})
+        if form.is_valid():
+            print(True)
+            print(form.cleaned_data)
+            pick = form.save(commit=False)
+            pick.user = request.user
+            pick.submit_date = datetime.datetime.now()
+            pick.save()
+            return redirect(f'/football/season/{year}/week/{week}')
+    
+    else:
+        form = PickForm()
+    
+    return render(request, 'pick_game.html', context={'form':form, 'games_list': games_list})
 
-
+# ----------------------------------------------------------------------------------------------------------
 
 def pick_week(request, year, week):
-  # season = Season.objects.get(year=year)
-  week = Week.objects.get(season__year=year, week=week)
-  games_list = Game.objects.filter(week_id=week.week_id)
-  number_of_extra_forms = len(games_list)
-  formset = formset_factory(PickForm, extra=number_of_extra_forms)
-  
-  if request.method == 'POST':
-    formset_post = formset(request.POST)
-    form_tiebreaker_post = TiebreakerForm(request.POST)
-    if formset_post.is_valid():
-      for form in formset_post:
-        pick = form.save(commit=False)
-        pick.user = request.user
-        pick.submit_date = datetime.datetime.now()
-        pick.save()
-    if form_tiebreaker_post.is_valid():
-      tiebreaker = form_tiebreaker_post.save(commit=False)
-      tiebreaker.user = request.user
-      tiebreaker.game = games_list.last()
-      tiebreaker.week = games_list.last().week
-      tiebreaker.submit_date = datetime.datetime.now()
-      tiebreaker.save()
-      
-    return redirect(reverse('football:pick_week'))
-  
-  else:
-    form_tiebreaker = TiebreakerForm()
+    week = Week.objects.get(season__year=year, week=week)
+    games_list = Game.objects.filter(week_id=week.week_id)
+    picks_list = Pick.objects.filter(week_id=week.week_id, user_id=request.user)
+    number_of_games = len(games_list)
+    pick_formset = formset_factory(PickForm, extra=number_of_games)
+    formset = pick_formset(request.POST or None)
+    try:
+        tiebreaker_object = Tiebreaker.objects.get(week_id=week.week_id, user_id=request.user)
+    except Tiebreaker.DoesNotExist:
+        tiebreaker_object = None
     
-  return render(request, 'pick_week.html', context={'formset':formset, 
-                                                    'games_list': games_list, 
-                                                    'form_tiebreaker': form_tiebreaker})
+    PICK_OPTIONS = [('-1', '---')]
+    count = 1
+  
+    while count <= number_of_games:
+        PICK_OPTIONS += [(f'{count}', f'{count}')]
+        count += 1
+  
+    for game, form in zip(games_list, formset):
+        form.fields['home_team_points'].choices = PICK_OPTIONS
+        form.fields['away_team_points'].choices = PICK_OPTIONS
+        form.fields['home_team_points'].label = f'{game.home_team.location} {game.home_team.name}'
+        form.fields['away_team_points'].label = f'{game.away_team.location} {game.away_team.name}'
+        form.fields['game_id'].initial = game.game_id
+        form.fields['home_team_id'].initial = game.home_team.team_id
+        form.fields['away_team_id'].initial = game.away_team.team_id
+        
+        for pick in picks_list:
+            if pick.game.game_id == game.game_id:
+                if pick.team.team_id == game.away_team.team_id:
+                    form.fields['away_team_points'].initial = f'{pick.value}'
+                else:
+                    form.fields['home_team_points'].initial = f'{pick.value}'
+                    
+                form.fields['pick_id'].initial = pick.pick_id
+            
+    if request.method == 'POST':       
+        form_tiebreaker = TiebreakerForm(request.POST, instance=tiebreaker_object)
+        
+        if all([formset.is_valid(), form_tiebreaker.is_valid]):
+            for form in formset:
+                pick_form = form.cleaned_data                
+                game_id = pick_form['game_id']
+                
+                pick = Pick()
+                
+                if pick_form['pick_id'] > 0:
+                    pick.pick_id = pick_form['pick_id']
+                    
+                pick.user = request.user
+                pick.submit_date = datetime.datetime.now()
+                pick.game = Game.objects.get(game_id=game_id)
+                pick.week = week
+                
+                if int(pick_form['away_team_points']) > 0:
+                    team_id = pick_form['away_team_id']                
+                    pick.value = pick_form['away_team_points']
+                    pick.team = Team.objects.get(team_id=team_id)
+                else:
+                    team_id = pick_form['home_team_id']                
+                    pick.value = pick_form['home_team_points']
+                    pick.team = Team.objects.get(team_id=team_id)
+                
+                pick.save()
+            
+            tiebreaker = form_tiebreaker.save(commit=False)
+            tiebreaker.user = request.user
+            tiebreaker.game = games_list.last()
+            tiebreaker.week = week
+            tiebreaker.submit_date = datetime.datetime.now()
+            tiebreaker.save()
+            
+            url_is = request.build_absolute_uri()
+            return redirect(reverse('football:index'))
+    else:
+        form_tiebreaker = TiebreakerForm(None, instance=tiebreaker_object)
+      
+    game_form = zip(games_list, formset)
+    
+    
+    
+    return render(request, 'pick_week.html', context={'game_form': game_form, 
+                                                        'form_tiebreaker': form_tiebreaker,
+                                                        'formset': formset})
 
-
+# ----------------------------------------------------------------------------------------------------------
 
 def result_list(request):
-  season_list = Season.objects.order_by('year')
+    season_list = Season.objects.order_by('year')
   
-  return render(request, 'results_list.html', context={'season_list': season_list})
+    return render(request, 'results_list.html', context={'season_list': season_list})
 
-
+# ----------------------------------------------------------------------------------------------------------
 
 def result_year(request, year):
-  season = Season.objects.get(year=year)
-  week_list = Week.objects.filter(season=season.season_id)
-  print(week_list)
-  
-  return render(request, 'results_year.html', context={'week_list': week_list})
-
-
-
-def result_week(request, year, week):  
-  week = Week.objects.get(season__year=year, week=week)
-  game_list = Game.objects.filter(week=week).order_by('start_time', 'game_id')  
-  number_of_games = len(game_list)
-  number_of_teams = number_of_games * 2  
-  team_id_matrix = [0] * number_of_teams
-  team_name_matrix = [''] * number_of_teams
-  win_matrix = [0] * number_of_teams
-  
-  # Caclulates matrix used to multiply scores
-  for game_number, game in enumerate(game_list):
-    away_index = game_number * 2
-    home_index = game_number * 2 + 1
-    if game.game_status == 'F':
-      if game.away_score > game.home_score:
-        win_matrix[away_index] = 1
-      else:
-        win_matrix[home_index] = 1
-        
-      team_id_matrix[away_index] = game.away_team.team_id
-      team_id_matrix[home_index] = game.home_team.team_id      
-      team_name_matrix[away_index] = f'{game.away_team.location} {game.away_team.name}'
-      team_name_matrix[home_index] = f'{game.home_team.location} {game.home_team.name}'
-      
-  pick_list = Pick.objects.filter(week__week=week.week_id).order_by('user__id', 'game__start_time', 'game__game_id').select_related('user', 'week', 'team', 'game')  
-  user_count = Pick.objects.filter(week__week=week.week_id).values('user_id').annotate(count=Count('user_id'))
-  total_users = len(user_count)  
-  pick_matrix = []
-  user_matrix = []
-  sum_matrix = [0] * total_users
-  
-  for user in user_count:
-    user_matrix.append(user['user_id'])
-  
-  for team_index, team in enumerate(team_id_matrix):
-    team_picks = pick_list.filter(team__team_id=team).order_by('user__id')
-    team_pick_list = [0] * total_users
+    season = Season.objects.get(year=year)
+    week_list = Week.objects.filter(season=season.season_id)
+    print(week_list)
     
-    for index, user in enumerate(user_matrix):
-      user_pick = team_picks.filter(user__id=user)
-      
-      if not user_pick:
-        team_pick_list[index] = 0
-      else:
-        team_pick_list[index] = user_pick[0].value        
-          
-      sum_matrix[index] += win_matrix[team_index] * team_pick_list[index]
+    return render(request, 'results_year.html', context={'week_list': week_list})
+
+# ----------------------------------------------------------------------------------------------------------
+@login_required
+def result_week(request, year, week):
+    week = Week.objects.get(season__year=year, week=week)
+    qs_total_week = Total.objects.filter(week=week).order_by('-total')
+    qs_total_season = Total.objects.filter(week__season__year=year, week__week__lte=week.week).order_by('-total')
+    qs_game = Game.objects.order_by_time(week.week_id)
+    
+    list_user = list()
+    list_total_week = list()
+    list_total_season = list()
+    list_picks = list()
+    list_teams = list()
+    
+    for total in qs_total_week:
+        obj_user = dict()
+        obj_user['id']= total.user_id
+        obj_user['name'] = total.user.first_name + ' ' + total.user.last_name[0]
+        list_user.append(obj_user)
+        
+    for game in qs_game:
+        obj_away_team = dict()
+        obj_home_team = dict()
+        
+        obj_away_team['name'] = game.away_team.full_name + ' AT'
+        obj_away_team['score'] = game.away_score;
+        
+        obj_home_team['name'] = game.home_team.full_name
+        obj_home_team['score'] = game.home_score;
+        
+        if game.away_score > game.home_score:
+            obj_away_team['result'] = 'win'
+            obj_home_team['result'] = 'loss'
+        elif game.away_score < game.home_score:
+            obj_away_team['result'] = 'loss'
+            obj_home_team['result'] = 'win'
+        else:
+            obj_away_team['result'] = 'tie'
+            obj_home_team['result'] = 'tie'
+        
+        list_teams.append(obj_away_team)
+        list_teams.append(obj_home_team)
+        
+        qs_away_picks = Pick.objects.filter(week=week, team=game.away_team)
+        qs_home_picks = Pick.objects.filter(week=week, team=game.home_team)
+        
+        list_away_pick = []
+        list_home_pick = []
+        
+        for user in list_user:            
+            try:
+                q_away_pick = qs_away_picks.get(user__id=user['id'])
+                list_away_pick.append(q_away_pick.value)
+            except:
+                list_away_pick.append(' ')
+                
+            try:
+                q_home_pick = qs_home_picks.get(user__id=user['id'])
+                list_home_pick.append(q_home_pick.value)
+            except:
+                list_home_pick.append(' ')
+                
+        list_picks.append(list_away_pick) 
+        list_picks.append(list_home_pick)
+        
+        
+    for user in list_user:    
+        q_total_season = Total.objects.filter(user__id=user['id'], week__season__year=year, ).aggregate(total_season=Sum('total'))
+        list_total_season.append(q_total_season['total_season'])
+        q_total_week = Total.objects.get(user__id=user['id'], week=week)
+        list_total_week.append(q_total_week.total)
+        
+    list_info = zip(list_teams, list_picks)
+    
+    # if request.method == 'POST': 
+    #     make_test_results()
   
-    pick_matrix.append(team_pick_list)
+    return render(request, 'results_week.html', context={'list_user': list_user, 
+                                                         'list_info': list_info,
+                                                         'list_total_season': list_total_season,
+                                                         'list_total_week': list_total_week})
   
-  table_row_matrix = zip(team_name_matrix, win_matrix, pick_matrix)
+# ----------------------------------------------------------------------------------------------------------
+
+def make_test_results():
+    qs_week = Week.objects.filter(season__year=2022)
+    
+    length_of_week = len(qs_week)
+    
+    int_times = 1
+    
+    for q_week in qs_week:
+        qs_game = Game.objects.filter(week=q_week)\
+        
+        calculate_week_scores(q_week, qs_game)
+        
+        int_times = int_times + 1
+        
+    # qs_user = User.objects.all()
+    
+    # list_pick = []
+    # int_pick = 1
+    # while int_pick < 17:
+    #     list_pick.append(int_pick)
+    #     int_pick = int_pick + 1
+    
+    # for q_week in qs_week:
+    #     qs_game = Game.objects.filter(week=q_week).order_by('game_id')
+        
+    #     for q_user in qs_user:
+    #         random.shuffle(list_pick)
+            
+    #         for index, q_game in enumerate(qs_game):
+    #             int_pick_team = random.randint(0, 1)
+                
+    #             obj_pick = Pick()
+    #             obj_pick.value = list_pick[index]
+    #             obj_pick.user = q_user
+    #             obj_pick.week = q_week
+    #             obj_pick.game = q_game
+                
+    #             if int_pick_team == 0:
+    #                 obj_pick.team = q_game.away_team
+    #             else:
+    #                 obj_pick.team = q_game.home_team
+                    
+    #             obj_pick.save()
+                    
+    #             if index == 15:
+    #                 obj_tiebreaker = Tiebreaker()
+    #                 obj_tiebreaker.tiebreaker_points = random.randint(25, 75)
+    #                 obj_tiebreaker.week = q_week
+    #                 obj_tiebreaker.game = q_game
+    #                 obj_tiebreaker.user = q_user
+    #                 obj_tiebreaker.save()
+                    
+    #                 letterman = 1234
+    
+    return
+
+    # q_season = Season.objects.get(year=2022)
+    # date = datetime.datetime(2022, 9, 6)
+    
+    # for x in range(1, 18):
+    #     obj_week = Week()
+    #     obj_week.season = q_season
+    #     obj_week.week = x
+    #     obj_week.time_start = date
+    #     date = date + datetime.timedelta(days=7)
+    #     obj_week.time_end = date
+    #     obj_week.save()   
+    
+    
+    # list_first_name = get_first_name()
+    # list_last_name = get_last_name()
+    
+#     for i in range (5, 31):
+#         user = User()
+#         user.username = list_first_name[i - 5] + '_' + list_last_name[i - 5]
+#         user.first_name = list_first_name[i - 5]
+#         user.last_name = list_last_name[i - 5]
+#         user.email = list_first_name[i - 5] + '_' + list_last_name[i - 5] + '@gmail.com'
+#         user.active = True
+#         user.password = 'Chad123!'
+#         user.save()
+    
+# def get_first_name():
+#     list_name = list()
+    
+#     list_name.append('Ryan')
+#     list_name.append('Emily')
+#     list_name.append('Megan')
+#     list_name.append('Olivia')
+#     list_name.append('Ellie')
+#     list_name.append('Mark')
+#     list_name.append('Miles')
+#     list_name.append('Shannon')
+#     list_name.append('Luke')
+#     list_name.append('Evan')
+#     list_name.append('Courtney')
+#     list_name.append('Ella')
+#     list_name.append('Cali')
+#     list_name.append('Elizabeth')
+#     list_name.append('Brian')
+#     list_name.append('Zach')
+#     list_name.append('Wes')
+#     list_name.append('Lauren')
+#     list_name.append('Mia')
+#     list_name.append('Mike')
+#     list_name.append('Achilles')
+#     list_name.append('Odysseus')
+#     list_name.append('Zeus')
+#     list_name.append('Zeke')
+#     list_name.append('Gabbie')
+#     list_name.append('Lana')
+    
+#     return list_name
+
+# def get_last_name():
+#     list_name = list()
+    
+#     list_name.append('Johnson')
+#     list_name.append('Munson')
+#     list_name.append('Birch')
+#     list_name.append('Schneider')
+#     list_name.append('Hilda')
+#     list_name.append('Muth')
+#     list_name.append('Machado')
+#     list_name.append('Harper')
+#     list_name.append('Mulch')
+#     list_name.append('Mahomes')
+#     list_name.append('Mac')
+#     list_name.append('Johnson')
+#     list_name.append('Washington')
+#     list_name.append('Miller')
+#     list_name.append('Hollins')
+#     list_name.append('Rivers')
+#     list_name.append('James')
+#     list_name.append('Iverson')
+#     list_name.append('Barber')
+#     list_name.append('Deville')
+#     list_name.append('Jaemes')
+#     list_name.append('Homa')
+#     list_name.append('Johnson')
+#     list_name.append('Musso')
+#     list_name.append('Karter')
+#     list_name.append('Streets')
+    
+#     return list_name
   
-  return render(request, 'results_week.html', context={'table_row_matrix':table_row_matrix, 
-                                                       'sum_matrix':sum_matrix})
   
+  
+    #   qs_team = Team.objects.all()
+    # qs_week = Week.objects.filter(season__year=2022)
+    # list_team = []
+    # num_games = len(qs_team) / 2
+  
+  
+  # for team in qs_team:
+    #     list_team.append(team.team_id)
+        
+        
+    # for week in qs_week:
+    #     random.shuffle(list_team)
+        
+        # game_number = 0
+        
+        # while game_number < 16:
+        #     away_team_number = list_team[game_number * 2]
+        #     home_team_number = list_team[game_number * 2 + 1]
+            
+            
+        #     obj_game = Game()
+        #     obj_game.game_status = 'F'
+        #     obj_game.away_team = qs_team.get(team_id=away_team_number)
+        #     obj_game.home_team = qs_team.get(team_id=home_team_number)
+        #     obj_game.away_score = random.randint(0, 50)
+        #     obj_game.home_score = random.randint(0, 50)
+        #     obj_game.week = week
+        #     obj_game.game_time = GameTime.objects.get(game_time_id=4)
+        #     obj_game.save()
+            
+        #     game_number = game_number + 1

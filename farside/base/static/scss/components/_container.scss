@@ -3,6 +3,23 @@
     margin: 0 auto;
     padding: 10rem;
     min-height: 80vh;
-    // background-color: $color-primary-light;
-    background-color: $color-white;
+
+    &__button {
+    }
+
+    &__login {
+        width: 40rem;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        gap: 0.8rem;
+    }
+
+    &__flex {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 2.4rem;
+        margin-block: 2.4rem;
+    }
 }

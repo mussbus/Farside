@@ -1,0 +1,50 @@
+{% extends 'base_main.html' %}
+{% load static %}
+
+{% block title %}
+
+{% endblock %} 
+
+{% block scripts %}
+    <script defer src="{% static 'js/update_week_games.js' %}" type="text/javascript"></script>
+{% endblock %} 
+
+{% block content %} 
+    <h1>Update Scores - Week 1</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="pick__action-row">
+            <button class="btn btn__submit" type="submit" name="save">
+                Save <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <button class="btn btn__clear" type="reset">Clear</button>
+        </div>
+        <div class="grid grid__schedule pick__schedule u-margin-bottom-medium">
+            {% for game, form in games_formset %}
+                <div class="pick__game grid grid__game">
+                    <div class="pick__date">
+                        <span class="pick__day">{{game.game_time.day}}</span>
+                        <span class="pick__time">{{game.game_time.game_time|date:'g:i A'}}</span>
+                    </div>
+                    <label for="form-{{forloop.counter0}}-away_score" 
+                        class="input__label pick__team">
+                        {{form.away_score.label}}
+                    </label>
+                    {{form.away_score}}
+                    <label for="form-{{forloop.counter0}}-home_score" 
+                        class="input__label pick__team">
+                        {{ form.home_score.label }}
+                    </label>
+                    {{form.home_score}}
+                    <label for="form-{{forloop.counter0}}-game_status" 
+                        class="input__label pick__team">
+                        {{ form.game_status.label }}
+                    </label>
+                    {{form.game_status}}
+                </div>
+            {% endfor %}
+        </div>
+        {{formset.management_form}}
+    </form>  
+{% endblock %}

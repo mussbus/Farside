@@ -12,7 +12,12 @@
             href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap"
             rel="stylesheet" />
         <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-        {% block scripts %}{% endblock %}
+        <script defer src="{% static 'js/modal.js' %}" type="text/javascript"></script>
+        <script defer src="{% static 'js/table.js' %}" type="text/javascript"></script>
+
+        {% block scripts %}
+        
+        {% endblock %}
     </head>
     <body>
         {% block navigation %} {% endblock %}        

@@ -2,15 +2,17 @@
 
 {% block content %}
   <form method="POST" class="form">
-    {% csrf_token %}
-    <div class="grid">
-      {{form}}
-    </div>
-    <a href="{% url 'register' %}" class="btn">Register</a>
-    <button type="submit" class="btn">Login</button>
-  </form>
+        {% csrf_token %}
+        <div class="container__login">
+            {{form}}
+            <div class="pick__action-row">
+                <button type="submit" class="btn">Login</button>
+                <a href="{% url 'register' %}" class="btn">Register</a>
+            </div>
+        </div>
+    </form>
 
-  {% if user.is_authenticated %}
-    <p class="p">HELLO USER</p>
-  {% endif %}
+    {% if user.is_authenticated %}
+        <p class="p">HELLO  </p>
+    {% endif %}
 {% endblock  %}

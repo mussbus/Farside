@@ -1,0 +1,44 @@
+{% extends 'base_main.html' %} 
+{% load static %}
+
+{% block title %}
+    Add Week Games
+{% endblock %} 
+
+{% block scripts %}
+    <script defer src="{% static 'js/add_week_games.js' %}" type="text/javascript"></script>
+{% endblock %} 
+
+{% block content %} 
+    <h1 class="heading__primary">Add Games</h1>
+
+    <form id="form" method="POST">
+        {% csrf_token %}
+        <div class="pick__action-row">
+            <button class="btn btn__submit" type="button" id="btn_remove">
+                Remove Game <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <button class="btn btn__submit" type="button" id="btn_add">
+                Add Game <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <button class="btn btn__submit" type="submit" name="save">
+                Save <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+
+        <div class="grid grid__schedule pick__schedule" id="formset_container">
+            {% for form in formset %}
+                <div class="grid__game-add form__form">
+                    <span>Game {{forloop.counter}}</span>
+                    {% for field in form %} 
+                        <label for="{{field.auto_id}}" class="input__label">
+                            {{field.label}}{{field.label_suffix}}
+                        </label>
+                        {{field}}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        {{formset.management_form}}
+    </form>
+{% endblock %}

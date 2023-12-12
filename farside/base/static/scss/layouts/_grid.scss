@@ -4,7 +4,8 @@
     &__schedule {
         grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
         align-content: start;
-        gap: 3.2rem;
+        gap: 4.8rem;
+        margin: 0 auto;
 
         @media only screen and (max-width: $bp-small) {
             grid-template-columns: 1fr;
@@ -17,8 +18,24 @@
             [left-end center-start] minmax(6rem, 1fr)
             [center-end right-start] 5rem [right-end full-end];
         align-content: start;
-        row-gap: 2rem;
-        column-gap: 2rem;
+        gap: 2rem;
+
+        &-add {
+            display: flex;
+            // align-items: stretch;
+            flex-direction: column;
+            gap: 0.2rem;
+            border: 1px solid $color-black;
+            border-radius: 2rem;
+            padding: 1.6rem;
+            background-color: $color-secondary-light;
+
+            & > span {
+                align-self: self-end;
+                font-size: 1.8rem;
+                font-weight: 600;
+            }
+        }
     }
 
     &-day,

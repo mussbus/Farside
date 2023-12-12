@@ -1,21 +1,38 @@
 .btn {
     height: 4rem;
-    width: 12rem;
+    padding-inline: 1.2rem;
+    // width: 12rem;
     border-radius: 0.5rem;
     border: 0.1rem solid $color-black;
     font-family: inherit;
-    font-size: inherit;
+    font-size: $grid-font-size;
     color: inherit;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    transition: all 0.35s;
+    text-decoration: none;
 
     &:hover {
         cursor: pointer;
     }
 
-    &__submit {
-        background-color: $color-secondary-light;
+    &__add {
+        background-color: $color-primary;
+        color: $color-white;
 
         &:hover {
-            background-color: $color-secondary;
+            background-color: $color-primary-dark;
+        }
+    }
+
+    &__submit {
+        background-color: $color-secondary;
+
+        &:hover {
+            background-color: $color-secondary-dark;
         }
     }
 
@@ -26,4 +43,22 @@
             background-color: $color-grey-dark-2;
         }
     }
+
+    &__icon {
+        padding: 0;
+        padding-block: 0;
+        padding-inline: 0;
+        border: none;
+        border-image: none;
+        background-color: transparent;
+        height: 24px;
+        width: 24px;
+    }
+}
+
+button:disabled {
+    &:hover {
+        background-color: $color-grey-dark-1;
+    }
+    background-color: $color-grey-dark-1;
 }

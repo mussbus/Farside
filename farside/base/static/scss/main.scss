@@ -4,19 +4,27 @@
 
 @import 'base/animations';
 @import 'base/base';
+@import 'base/colors';
 @import 'base/typography';
 @import 'base/utilities';
 
 @import 'components/btn';
 @import 'components/container';
 @import 'components/drag';
+@import 'components/icon';
 @import 'components/input';
 @import 'components/modal';
+@import 'components/table';
+
+@import 'font_awesome/fontawesome.scss';
+@import 'font_awesome/regular.scss';
+@import 'font_awesome/solid.scss';
 
 @import 'layouts/footer';
 @import 'layouts/grid';
 @import 'layouts/nav';
 
 @import 'pages/pick';
-@import 'pages/user';
 @import 'pages/result';
+@import 'pages/schedule';
+@import 'pages/user';

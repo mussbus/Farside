@@ -8,60 +8,87 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="primary__header">Week 1</h1>
+
+{% if formset.errors %}    
+    <div class="modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <span class="modal__close">&times;</span>
+            </div>
+            <div class="modal__body">
+                <ul="modal__error-list">
+                    {% for dict in formset.errors %}
+                        {% for error in dict.values %}
+                            <li class="modal__error-item">{{ error }}</li>                            
+                        {% endfor %}
+                    {% endfor %}                
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+
+<h1 class="heading__primary">Farside - Week 1, 2023</h1>
     <form method="POST">
         {% csrf_token %}
         <div class="grid grid__schedule pick__schedule u-margin-bottom-medium">
-            {% for game in games_list %}
-            <div class="pick__game grid grid__game" data-game="{{game.game_id}}">
-                <div class="pick__date">
-                    <span class="pick__day">{{game.start_time|date:'l'}}</span>
-                    <span class="pick__time">{{game.start_time|date:'g:i A'}}</span>
+            {% for game, form in game_form %}
+                <div class="pick__game grid grid__game" data-game="{{game.game_id}}">
+                    <div class="pick__date">
+                        <span class="pick__day">{{game.game_time.day}}</span>
+                        <span class="pick__time">{{game.game_time.game_time|date:'g:i A'}}</span>
+                    </div>
+                    <label for="form-{{forloop.counter0}}-away_team_points" 
+                        class="input__label pick__team" draggable="true">
+                        {{form.away_team_points.label}}
+                    </label>
+                    <select name="form-{{forloop.counter0}}-away_team_points" 
+                    id="form-{{forloop.counter0}}-away_team_points" data-location="away"
+                    class="input__select{% if form.home_team_points.errors %} input__error{% endif %}">
+                      {% for value, choice in form.fields.away_team_points.choices %} 
+                        {% if value == form.away_team_points.value %}
+                                <option value="{{ value }}" selected>{{ choice }}</option>
+                            {% else %}
+                                <option value="{{ value }}">{{ choice }}</option>
+                            {% endif %}
+                      {% endfor %}
+                    </select>
+                    <label for="form-{{forloop.counter0}}-home_team_points" 
+                        class="input__label pick__team" draggable="true">
+                        {{ form.home_team_points.label }}
+                    </label>
+                    <select name="form-{{forloop.counter0}}-home_team_points" 
+                    id="form-{{forloop.counter0}}-home_team_points" data-location="home"
+                    class="input__select{% if form.home_team_points.errors %} input__error{% endif %}">
+                        {% for value, choice in form.fields.home_team_points.choices %} 
+                            {% if value == form.home_team_points.value %}
+                                <option value="{{ value }}" selected>{{ choice }}</option>
+                            {% else %}
+                                <option value="{{ value }}">{{ choice }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    {{ form.game_id.as_hidden }}
+                    {{ form.away_team_id.as_hidden }}
+                    {{ form.home_team_id.as_hidden }}
+                    {{ form.pick_id.as_hidden }}
                 </div>
-                <label for="{{game.away_team.location}}-{{game.away_team.name}}" 
-                    class="pick__team" data-team="away">
-                    {{game.away_team.location}} {{game.away_team.name}}
-                </label>
-                <select id="{{game.away_team.location}}-{{game.away_team.name}}" 
-                    data-point="away" data-team="{{game.away_team.team_id}}" class="pick__choice">
-                    <option value="-1">---</option>
-                    {% for games in games_list%}
-                        <option value="{{forloop.counter}}">{{forloop.counter}}</option>
-                    {% endfor %}
-                </select>
-                <label for="{{game.home_team.location}}-{{game.home_team.name}}" 
-                    class="pick__team" data-team="home">
-                    {{game.home_team.location}} {{game.home_team.name}}
-                </label>
-                <select id="{{game.home_team.location}}-{{game.home_team.name}}" 
-                    data-point="home" data-team="{{game.home_team.team_id}}" class="pick__choice">
-                    <option value="-1">---</option>
-                    {% for games in games_list%}
-                        <option value="{{forloop.counter}}">{{forloop.counter}}</option>
-                    {% endfor %}
-                </select>
-                <span class="u-hidden-input">
-                    {% for form in formset %} 
-                        {% if forloop.parentloop.counter == forloop.counter %} 
-                            {% for field in form %}
-                                {{ field }} 
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %}
-                </span>
-            </div>
             {% endfor %}
         </div>
         {{formset.management_form}}
         <div class="pick__action-row">
             <span>
-                {% for field in form_tiebreaker %} 
-                    <label for="{{field.auto_id}}" class="pick__tiebreaker-label">{{field.label}}:</label>
-                    {{field}}
-                {% endfor %}
+                <label for="{{form_tiebreaker.tiebreaker_points.auto_id}}" 
+                class="input__label input__label-big">
+                    Tiebreaker:
+                </label>
+                {{form_tiebreaker.tiebreaker_points}}
             </span>
-            <input class="btn btn__submit" type="submit" />
-            <button class="btn btn__clear">Clear</button>
+            <button class="btn btn__submit" type="submit">
+                Submit <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <button class="btn btn__clear" type="clear">Clear</button>
         </div>
     </form>
 {% endblock %}

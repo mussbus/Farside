@@ -6,24 +6,25 @@ body {
     font-size: $default-font-size;
 }
 
-.heading-primary {
+.heading__primary {
     font-size: 4rem;
     color: $color-primary;
     line-height: 1.2;
     letter-spacing: 0.2rem;
     text-transform: capitalize;
     font-weight: 500;
+    margin-bottom: 2.4rem;
 }
 
-.heading-secondary {
+.heading__secondary {
     font-size: 4rem;
     color: $color-white;
     line-height: 1.2;
 }
 
-.heading-tertiary {
+.heading__tertiary {
     font-size: 4rem;
-    color: $color-white;
+    color: $color-primary;
     line-height: 1.2;
 }
 
@@ -33,4 +34,9 @@ body {
     &:not(:last-child) {
         margin-bottom: 3rem;
     }
+}
+
+.material-symbols-outlined {
+    font-size: 3.2rem;
+    transition: all 0.5s;
 }

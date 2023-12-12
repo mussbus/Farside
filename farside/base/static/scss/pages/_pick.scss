@@ -1,41 +1,37 @@
 .pick {
     &__action {
         &-row {
+            margin-block: 1.2rem;
             display: flex;
             justify-content: end;
-            gap: 5rem;
+            gap: 2.4rem;
         }
     }
     &__choice {
-        grid-column: right-start / right-end;
-        display: inline-block;
-        border-radius: 0.3rem;
-        font-size: inherit;
-        background-color: $color-white;
-        border: 0.1rem solid green;
-        &:hover {
-            cursor: pointer;
-        }
-
-        & > option {
-            text-align: center;
-        }
     }
 
     &__date {
         grid-column: full-start / full-end;
         display: flex;
         justify-content: space-between;
+        font-size: $grid-font-size;
+        font-weight: 600;
     }
+
     &__game {
         background-color: $color-grey-light-1;
         border-radius: 1rem;
         padding: 0.8rem 1.6rem;
-        box-shadow: 0rem 1rem 2rem rgba(green, 0.8);
+        box-shadow: 0rem 1rem 2rem rgba(red, 0.8);
         font-size: $default-font-size;
         // border: 0.2rem solid $color-black;
         // outline: 0.3rem solid $color-primary;
-        outline: 0.3rem solid green;
+        outline: 0.3rem solid red;
+
+        &-valid {
+            box-shadow: 0rem 1rem 2rem rgba(green, 0.8);
+            outline: 0.3rem solid green;
+        }
     }
     &__schedule {
     }

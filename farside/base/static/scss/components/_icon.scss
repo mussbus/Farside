@@ -1,0 +1,19 @@
+.icon {
+    &__delete {
+        color: red;
+    }
+    &__edit {
+        color: green;
+    }
+}
+
+.fa-solid,
+.fa-regular {
+    cursor: pointer;
+    pointer-events: none;
+
+    &::before {
+        pointer-events: all;
+        font-size: 24px;
+    }
+}

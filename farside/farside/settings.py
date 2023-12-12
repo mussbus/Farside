@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'football.apps.FootballConfig',
     'base.apps.BaseConfig',
     'user.apps.UserConfig',
+    'schedule.apps.ScheduleConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

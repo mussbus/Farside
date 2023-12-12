@@ -1,0 +1,96 @@
+{% extends 'base_main.html' %} 
+{% load static %}
+
+{% block title %}
+    Edit Games - Week {{week}}
+{% endblock %} 
+
+{% block scripts %}
+    <script defer src="{% static 'js/edit_week_games.js' %}" type="text/javascript"></script>
+{% endblock %} 
+
+{% block content %} 
+    <form method="POST">
+        {% csrf_token %}
+
+        <div id="modal__form" class="modal {% if edit == False %}modal__hidden{% endif %}">
+            <div class="modal__content modal__small">
+                <div class="modal__header">
+                    <h3 class="heading__tertiary"></h3>
+                    <span class="modal__close">&times;</span>
+                </div>
+                <div class="modal__body">
+                    <div class="container__flex">                        
+                        {% for field in game_form.visible_fields %}
+                            <div class="input__container">
+                                <label class="input__label" for="{{ field.auto_id }}">{{ field.label }}:</label>
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="pick__action-row">
+                        <button class="btn btn__submit" type="submit" name="save" {% if edit == True %}value="{{game_id}}"{% endif %}>
+                            Save <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button class="btn btn__clear" type="reset">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal__delete" class="modal {% if delete == False %}modal__hidden{% endif %}">
+            <div class="modal__content modal__small">
+                <div class="modal__header">
+                    <h3 class="heading__tertiary">Confirm Delete</h3>
+                    <span class="modal__close">&times;</span>
+                </div>
+                <div class="modal__body">
+                    <span class="text">Are you sure you want to delete the selected row?</span>
+                    <div class="pick__action-row">
+                        <button class="btn btn__submit" type="submit" name="confirm_delete" {% if delete == True %}value="{{game_id}}"{% endif %}>
+                            Save <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button class="btn btn__clear" type="reset">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pick__action-row">            
+            <button class="btn btn__add" name="add" type="submit">
+                Add <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+        
+        <div class="table__title">
+            <h4>Week {{week}} Games</h4>
+        </div>
+        <table class="table">
+            <tr class="table__row">
+                <th class="table__header table__header-icon">Edit</th>
+                <th class="table__header">Away Team</th>
+                <th class="table__header">Home Team</th>
+                <th class="table__header">Game Time</th>
+                <th class="table__header table__header-icon">Delete</th>
+            </tr>        
+            
+            {% for game in games_list %}
+            <tr class="table__row">
+                <td class="table__cell table__cell-icon">                    
+                    <button class="btn__icon" type="submit" name="edit" value="{{game.game_id}}">
+                        <i class="fa-solid fa-pencil green edit"></i>
+                    </button>
+                </td>
+                <td class="table__cell">{{game.away_team.location}} {{game.away_team.name}}</td>
+                <td class="table__cell">{{game.home_team.location}} {{game.home_team.name}}</td>
+                <td class="table__cell">{{game.game_time}}</td>
+                <td class="table__cell table__cell-icon">
+                    <button class="btn__icon" type="submit" name="delete" value="{{game.game_id}}">
+                        <i class="fa-regular fa-trash-can red delete"></i>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base_main.html' %} 
+
+{% block title %}
+  Schedule
+{% endblock %} 
+
+{% block scripts %}
+
+{% endblock %} 
+
+{% block content %}
+<h1 class="heading__primary">Schedule</h1>
+    <ul class="schedule__list">
+        <li class="schedule__item">
+            <h3 class="heading__tertiary">Find Week</h3>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="schedule__container">
+                    {% comment %} <div class=""> {% endcomment %}
+                    {% for field in form_update_scores %} 
+                        <label for="{{field.label.auto_id}}" class="input__label input__label-big">
+                            {{field.label}}:
+                        </label>
+                        {{field}}
+                    {% endfor %}
+                    {% comment %} </div> {% endcomment %}
+                    <button type="submit" class='btn btn__submit' name="ADD_GAMES">
+                        Add Games <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <button type="submit" class='btn btn__submit' name="UPDATE_SCORES">
+                        Update Scores <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </li>
+        {% for week in week_list%} 
+            <li class="schedule__item">
+                <h3 class="heading__tertiary">Week {{ week.week }}</h3>
+                <div class="schedule__container">
+                    <a href="/schedule/add_games/season/{{week.season.year}}/week/{{week.week}}" class="btn btn__submit">
+                        Add Games <span class="material-symbols-outlined">add</span>
+                    </a>
+                    <a href="/schedule/update_scores/season/{{week.season.year}}/week/{{week.week}}" class="btn btn__submit">
+                        Update Scores <span class="material-symbols-outlined">arrow_right_alt</span>
+                    </a>
+                </div>
+            </li>    
+        {% endfor %}
+    </ul>
+{% endblock %}

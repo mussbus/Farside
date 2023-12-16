@@ -20,7 +20,7 @@
                 Score
             </th>
             {% for user in list_user %} 
-                <th class="table__header-name u-center-text">
+                <th class="table__header-name">
                     {{user.name}}
                 </th>
             {% endfor %}
@@ -48,8 +48,17 @@
                 Week Total
             </th>
             <td class="table__cell-small"></td>
-            {% for total in list_total_week %} 
-                <td class="table__cell-small u-center-text">{{total}}</td>
+            {% for user in list_user %} 
+                <td class="table__cell-small u-center-text">{{user.week_total}}</td>
+            {% endfor %}
+        </tr>
+        <tr class="table__row">
+            <th class="table__cell-small">
+                Week Rank
+            </th>
+            <td class="table__cell-small"></td>
+            {% for user in list_user %} 
+                <td class="table__cell-small u-center-text">{{user.week_rank}}</td>
             {% endfor %}
         </tr>
         <tr class="table__row">
@@ -57,8 +66,17 @@
                 Season Total
             </th>
             <td class="table__cell-small"></td>
-            {% for total in list_total_season %} 
-                <td class="table__cell-small u-center-text">{{total}}</td>
+            {% for user in list_user %} 
+                <td class="table__cell-small u-center-text">{{user.season_total}}</td>
+            {% endfor %}
+        </tr>
+        <tr class="table__row">
+            <th class="table__cell-small">
+                Season Rank
+            </th>
+            <td class="table__cell-small"></td>
+            {% for user in list_user %} 
+                <td class="table__cell-small u-center-text">{{user.season_rank}}</td>
             {% endfor %}
         </tr>
     </table>

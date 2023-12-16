@@ -26,9 +26,10 @@
         }
 
         &-small {
-            font-size: 1rem;
+            font-size: 1.1rem;
             width: 2rem;
             border: 1px solid $color-grey-dark-3;
+            padding-inline: 0.2rem;
 
             &:first-child {
                 // border-left: none;
@@ -57,16 +58,18 @@
             writing-mode: vertical-rl;
             text-orientation: upright;
             border: 1px solid $color-grey-dark-3;
-            font-size: 1rem;
+            font-size: 1.1rem;
             line-height: 0.8;
             border-top: none;
-            text-align: left;
+            margin-bottom: auto;
+            text-align: end;
+            line-height: 1.2;
         }
 
         &-team {
             text-align: left;
-            width: 16rem;
-            font-size: 1rem;
+            width: 18rem;
+            font-size: 1.1rem;
             padding: 0.2rem 0.5rem;
             line-height: 1;
             border: 1px solid $color-grey-dark-3;

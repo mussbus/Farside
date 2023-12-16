@@ -398,9 +398,10 @@ input:disabled:hover {
   min-width: 10rem;
 }
 .table__cell-small {
-  font-size: 1rem;
+  font-size: 1.1rem;
   width: 2rem;
   border: 1px solid #333;
+  padding-inline: 0.2rem;
 }
 .table__cell-small:first-child {
   border-left: none;
@@ -424,15 +425,17 @@ input:disabled:hover {
   writing-mode: vertical-rl;
   text-orientation: upright;
   border: 1px solid #333;
-  font-size: 1rem;
+  font-size: 1.1rem;
   line-height: 0.8;
   border-top: none;
-  text-align: left;
+  margin-bottom: auto;
+  text-align: end;
+  line-height: 1.2;
 }
 .table__header-team {
   text-align: left;
-  width: 16rem;
-  font-size: 1rem;
+  width: 18rem;
+  font-size: 1.1rem;
   padding: 0.2rem 0.5rem;
   line-height: 1;
   border: 1px solid #333;

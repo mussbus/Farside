@@ -158,26 +158,39 @@ def result_year(request, year):
 def result_week(request, year, week):
     week = Week.objects.get(season__year=year, week=week)
     qs_total_week = Total.objects.filter(week=week).order_by('-total')
-    qs_total_season = Total.objects.filter(week__season__year=year, week__week__lte=week.week).order_by('-total')
+    qs_total_season = Total.objects.values('user__id').filter(week__season__year=year, week__week__lte=week.week).annotate(total_season=Sum('total')).order_by('-total_season')
     qs_game = Game.objects.order_by_time(week.week_id)
     
     list_user = list()
-    list_total_week = list()
-    list_total_season = list()
     list_picks = list()
-    list_teams = list()
+    list_teams = list()    
+    dict_season_rank = dict()
+        
+    for index, q_total_season in enumerate(qs_total_season):
+        user_rank = dict()
+        user_rank['season_rank'] = index + 1
+        user_rank['season_total'] = q_total_season['total_season']
+        dict_season_rank[q_total_season['user__id']] = user_rank
+        
+    index = 1
     
     for total in qs_total_week:
         obj_user = dict()
         obj_user['id']= total.user_id
         obj_user['name'] = total.user.first_name + ' ' + total.user.last_name[0]
+        obj_user['season_total'] = dict_season_rank.get(total.user_id).get('season_total')
+        obj_user['season_rank'] = dict_season_rank.get(total.user_id).get('season_rank')
+        obj_user['week_total'] = total.total
+        obj_user['week_rank'] = index
         list_user.append(obj_user)
+        
+        index = index + 1
         
     for game in qs_game:
         obj_away_team = dict()
         obj_home_team = dict()
         
-        obj_away_team['name'] = game.away_team.full_name + ' AT'
+        obj_away_team['name'] = game.away_team.full_name + ' at'
         obj_away_team['score'] = game.away_score;
         
         obj_home_team['name'] = game.home_team.full_name
@@ -196,11 +209,11 @@ def result_week(request, year, week):
         list_teams.append(obj_away_team)
         list_teams.append(obj_home_team)
         
-        qs_away_picks = Pick.objects.filter(week=week, team=game.away_team)
-        qs_home_picks = Pick.objects.filter(week=week, team=game.home_team)
+        qs_away_picks = Pick.objects.filter(week=week, team=game.away_team).select_related('user')
+        qs_home_picks = Pick.objects.filter(week=week, team=game.home_team).select_related('user')
         
-        list_away_pick = []
-        list_home_pick = []
+        list_away_pick = list()
+        list_home_pick = list()
         
         for user in list_user:            
             try:
@@ -218,22 +231,13 @@ def result_week(request, year, week):
         list_picks.append(list_away_pick) 
         list_picks.append(list_home_pick)
         
-        
-    for user in list_user:    
-        q_total_season = Total.objects.filter(user__id=user['id'], week__season__year=year, ).aggregate(total_season=Sum('total'))
-        list_total_season.append(q_total_season['total_season'])
-        q_total_week = Total.objects.get(user__id=user['id'], week=week)
-        list_total_week.append(q_total_week.total)
-        
     list_info = zip(list_teams, list_picks)
     
     # if request.method == 'POST': 
     #     make_test_results()
   
     return render(request, 'results_week.html', context={'list_user': list_user, 
-                                                         'list_info': list_info,
-                                                         'list_total_season': list_total_season,
-                                                         'list_total_week': list_total_week})
+                                                         'list_info': list_info})
   
 # ----------------------------------------------------------------------------------------------------------
 

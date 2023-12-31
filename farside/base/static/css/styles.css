@@ -199,12 +199,12 @@ button:disabled:hover {
   padding: 10rem;
   min-height: 80vh;
 }
-.container__login {
-  width: 40rem;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  gap: 0.8rem;
+.container__body {
+  position: relative;
+  padding-top: 20rem;
+  min-height: 100dvh;
+  width: 100dvw;
+  background-image: linear-gradient(0deg, hsl(100, 72%, 24%) 0%, hsl(100, 46%, 33%) 11%, hsl(99, 32%, 41%) 22%, hsl(98, 24%, 49%) 33%, hsl(97, 23%, 57%) 44%, hsl(96, 23%, 65%) 56%, hsl(96, 23%, 74%) 67%, hsl(95, 24%, 82%) 78%, hsl(95, 24%, 91%) 90%, hsl(0, 0%, 100%) 100%);
 }
 .container__flex {
   display: flex;
@@ -212,6 +212,11 @@ button:disabled:hover {
   flex-wrap: wrap;
   gap: 2.4rem;
   margin-block: 2.4rem;
+}
+.container__stretch {
+  display: grid;
+  gap: 2.4rem;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .drag__bgc {
@@ -240,6 +245,11 @@ button:disabled:hover {
 .fa-regular::before {
   pointer-events: all;
   font-size: 24px;
+}
+
+.img {
+  width: 100%;
+  border-radius: inherit;
 }
 
 .input__container {
@@ -278,6 +288,17 @@ button:disabled:hover {
 .input__label-big {
   font-size: 2.4rem;
 }
+.input__label-login {
+  color: #640d14;
+  font-size: 1.8rem;
+}
+.input__login {
+  height: 3rem;
+  width: 100%;
+  font-size: 1.6rem;
+  font-family: inherit;
+  padding-inline: 0.5rem;
+}
 .input__select {
   grid-column: right-start/right-end;
   display: inline-block;
@@ -310,6 +331,10 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+input:-webkit-autofill::first-line {
+  font-family: "Rubik", sans-serif;
+}
+
 input[type=number] {
   appearance: textfield;
   -moz-appearance: textfield;
@@ -320,6 +345,10 @@ input:disabled {
 }
 input:disabled:hover {
   background-color: #777;
+}
+
+input:focus {
+  border: 1px solid #a21521;
 }
 
 .modal {
@@ -8885,6 +8914,34 @@ readers do not read off random characters that represent icons */
 .nav__link:active {
   color: #fff;
   transform: translateY(-0.1rem);
+}
+
+.login__container {
+  background-color: #fff;
+  border-radius: 0.6rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  min-height: 70rem;
+  margin-inline: auto;
+  max-width: 120rem;
+  background-image: url("/static/images/Football-Grass.jpg");
+  background-size: cover;
+  background-position: top;
+}
+.login__container-form {
+  width: 33.33333%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 3.2rem;
+  opacity: 0.95;
+  background-color: #fff;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.login__container-photo {
+  width: 66.66666%;
 }
 
 .pick__action-row {

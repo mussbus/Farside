@@ -124,7 +124,7 @@ class Game(models.Model):
     return f"Week {self.week.week} {self.week.season.year} {self.away_team.abbreviation} at {self.home_team.abbreviation}"
   
 #   class Meta:
-#     ordering = ['week', 'game_time.day', 'game_time', 'game_id']
+#     ordering = ['week.week', 'game_time.day.add_days', 'game_time.game_time', 'game_id']
   
 # ----------------------------------------------------------------------------------------------------------
   

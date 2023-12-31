@@ -1,18 +1,37 @@
 {% extends 'base_generic.html' %}
+{% load static %}
 
-{% block content %}
-  <form method="POST" class="form">
-        {% csrf_token %}
-        <div class="container__login">
-            {{form}}
-            <div class="pick__action-row">
-                <button type="submit" class="btn">Login</button>
-                <a href="{% url 'register' %}" class="btn">Register</a>
+{% block title %}Login{% endblock %}
+
+{% block body %}
+    <div class="container__body">
+        <div class="login__container">
+            <div class="login__container-form">
+                <h1 class="heading__primary">Farside Sign-In</h1>
+                <form method="POST" class="form">
+                    {% csrf_token %}
+                    {% comment %} {{ form.non_field_errors }}
+                    <div class="input__container u-margin-bottom-small">        
+                        <label class="input__label input__label-login" for="{{ form.username.id_for_label }}">Username:</label>
+                        <input class="input__login" type="text" name="username" autofocus="" autocapitalize="none" autocomplete="new-username" maxlength="150" required="" id="id_username">
+                        {{ form.username.errors }}
+                    </div>
+                    <div class="input__container u-margin-bottom-medium">                
+                        <label class="input__label input__label-login"  for="{{ form.password.id_for_label }}">Password:</label>
+                        <input class="input__login" type="password" name="password" autocomplete="new-password" required="" id="id_password">
+                        {{ form.password.errors }}
+                    </div>
+                    {% endcomment %}
+                    {{form}}
+                    <div class="pick__action-row">
+                        <button type="submit" class="btn">Sign In</button>
+                    </div>
+                    <div class="">
+                        <p class="">Don't have an account? <a href="{% url 'register' %}" class="login__link">Register here!</a> </p>
+                    </div> 
+                </form>
             </div>
+            <div class="login__container-photo"></div>
         </div>
-    </form>
-
-    {% if user.is_authenticated %}
-        <p class="p">HELLO  </p>
-    {% endif %}
+    </div>
 {% endblock  %}

@@ -24,7 +24,7 @@ urlpatterns = [
     path('football/', include('football.urls')),
     path('base/', include('base.urls')),
     path('schedule/', include('schedule.urls')),
-    path('register/', user_views.register, name='register'),
-    path('', authentication_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('register/', user_views.register_view, name='register'),
+    path('login/', user_views.login_view, name='login'),
     path('logout/', authentication_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
 ] 

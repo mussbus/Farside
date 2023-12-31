@@ -4,15 +4,41 @@
     padding: 10rem;
     min-height: 80vh;
 
-    &__button {
+    &__body {
+        position: relative;
+        padding-top: 20rem;
+        min-height: 100dvh;
+        width: 100dvw;
+        // background-image: linear-gradient(
+        //     0deg,
+        //     hsl(240deg 100% 20%) 1%,
+        //     hsl(311deg 100% 25%) 42%,
+        //     hsl(334deg 100% 40%) 49%,
+        //     hsl(6deg 98% 61%) 51%,
+        //     hsl(37deg 100% 50%) 51%,
+        //     hsl(55deg 100% 50%) 50%,
+        //     hsl(47deg 100% 50%) 49%,
+        //     hsl(39deg 100% 50%) 49%,
+        //     hsl(30deg 100% 50%) 51%,
+        //     hsl(20deg 100% 50%) 58%,
+        //     hsl(0deg 100% 50%) 99%
+        // );
+        background-image: linear-gradient(
+            0deg,
+            hsl(100deg 72% 24%) 0%,
+            hsl(100deg 46% 33%) 11%,
+            hsl(99deg 32% 41%) 22%,
+            hsl(98deg 24% 49%) 33%,
+            hsl(97deg 23% 57%) 44%,
+            hsl(96deg 23% 65%) 56%,
+            hsl(96deg 23% 74%) 67%,
+            hsl(95deg 24% 82%) 78%,
+            hsl(95deg 24% 91%) 90%,
+            hsl(0deg 0% 100%) 100%
+        );
     }
 
-    &__login {
-        width: 40rem;
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto;
-        gap: 0.8rem;
+    &__button {
     }
 
     &__flex {
@@ -21,5 +47,11 @@
         flex-wrap: wrap;
         gap: 2.4rem;
         margin-block: 2.4rem;
+    }
+
+    &__stretch {
+        display: grid;
+        gap: 2.4rem;
+        grid-template-columns: repeat(2, 1fr);
     }
 }

@@ -1,8 +1,28 @@
 {% extends 'base_generic.html' %}
-{% block content %}
-  <form method="POST" class="form">
-    {% csrf_token %}
-    {{form}}
-    <button type="submit" class="btn">Register</button>
-  </form>
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="container__body">
+        <div class="login__container">
+            <div class="login__container-photo"></div>
+            <div class="login__container-form">
+                <h1 class="heading__primary">Farside Sign-In</h1>
+                <form method="POST" class="form" autocomplete="off">
+                    {% csrf_token %}
+                    {{form.non_field_errors}}
+                    {% for field in form %}
+                        <label class="input__label" for="{{ field.auto_id }}">{{ field.label }}{{field.label_suffix}}</label>
+                        {{ field }}
+                    {% endfor %}
+                    <div class="pick__action-row">
+                        <button type="submit" class="btn">Register</button>
+                    </div>
+                    <div class="">
+                        <p class="">Have an account? <a href="{% url 'login' %}" class="login__link">Sign in here!</a> </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock  %}

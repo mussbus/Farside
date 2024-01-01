@@ -1,5 +1,6 @@
 'use strict';
 
+const modalError = document.getElementById('modal__error');
 const modalForm = document.getElementById('modal__form');
 const modalDelete = document.getElementById('modal__delete');
 const modalContent = document.querySelector('.modal__content');
@@ -44,13 +45,19 @@ const modalInit = function (modal) {
         };
 
         // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.classList.add('modal__hidden');
-            }
-        };
+    }
+};
+
+window.onclick = function (event) {
+    if (event.target == modalForm) {
+        modalForm.classList.add('modal__hidden');
+    } else if (event.target == modalError) {
+        modalError.classList.add('modal__hidden');
+    } else if (event.target == modalDelete) {
+        modalDelete.classList.add('modal__hidden');
     }
 };
 
 modalInit(modalDelete);
+modalInit(modalError);
 modalInit(modalForm);

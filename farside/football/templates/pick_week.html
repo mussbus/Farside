@@ -10,7 +10,7 @@
 {% block content %}
 
 {% if formset.errors %}    
-    <div class="modal">
+    <div class="modal" id="modal__error">
         <div class="modal__content">
             <div class="modal__header">
                 <span class="modal__close">&times;</span>
@@ -19,7 +19,7 @@
                 <ul="modal__error-list">
                     {% for dict in formset.errors %}
                         {% for error in dict.values %}
-                            <li class="modal__error-item">{{ error }}</li>                            
+                            <li class="modal__error-item">{{ error }}</li>
                         {% endfor %}
                     {% endfor %}                
                 </ul>
@@ -28,53 +28,61 @@
     </div>
 {% endif %}
 
-
 <h1 class="heading__primary">Farside - Week 1, 2023</h1>
     <form method="POST">
         {% csrf_token %}
-        <div class="grid grid__schedule pick__schedule u-margin-bottom-medium">
-            {% for game, form in game_form %}
-                <div class="pick__game grid grid__game" data-game="{{game.game_id}}">
-                    <div class="pick__date">
-                        <span class="pick__day">{{game.game_time.day}}</span>
-                        <span class="pick__time">{{game.game_time.game_time|date:'g:i A'}}</span>
+        <div class="pick__flexbox">
+            <ul class="pick__list">
+                {% for pick in list_picks_display reversed %} 
+                    <li class="pick__list-item">
+                        <span class="u-right-text">{{forloop.revcounter}}.</span>
+                        <span>{{pick}}</span></li>
+                {% endfor %}
+            </ul>
+            <div class="grid grid__schedule pick__schedule u-margin-bottom-medium">
+                {% for game, form in game_form %}
+                    <div class="pick__game grid grid__game" data-game="{{game.game_id}}">
+                        <div class="pick__date">
+                            <span class="pick__day">{{game.game_time.day}}</span>
+                            <span class="pick__time">{{game.game_time.game_time|date:'g:i A'}}</span>
+                        </div>
+                        <label for="form-{{forloop.counter0}}-away_team_points" 
+                            class="input__label pick__team" draggable="true">
+                            {{form.away_team_points.label}}
+                        </label>
+                        <select name="form-{{forloop.counter0}}-away_team_points" 
+                        id="form-{{forloop.counter0}}-away_team_points" data-location="away"
+                        class="input__select{% if form.home_team_points.errors %} input__error{% endif %}">
+                          {% for value, choice in form.fields.away_team_points.choices %} 
+                            {% if value == form.away_team_points.value %}
+                                    <option value="{{ value }}" selected>{{ choice }}</option>
+                                {% else %}
+                                    <option value="{{ value }}">{{ choice }}</option>
+                                {% endif %}
+                          {% endfor %}
+                        </select>
+                        <label for="form-{{forloop.counter0}}-home_team_points" 
+                            class="input__label pick__team" draggable="true">
+                            {{ form.home_team_points.label }}
+                        </label>
+                        <select name="form-{{forloop.counter0}}-home_team_points" 
+                        id="form-{{forloop.counter0}}-home_team_points" data-location="home"
+                        class="input__select{% if form.home_team_points.errors %} input__error{% endif %}">
+                            {% for value, choice in form.fields.home_team_points.choices %} 
+                                {% if value == form.home_team_points.value %}
+                                    <option value="{{ value }}" selected>{{ choice }}</option>
+                                {% else %}
+                                    <option value="{{ value }}">{{ choice }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        {{ form.game_id.as_hidden }}
+                        {{ form.away_team_id.as_hidden }}
+                        {{ form.home_team_id.as_hidden }}
+                        {{ form.pick_id.as_hidden }}
                     </div>
-                    <label for="form-{{forloop.counter0}}-away_team_points" 
-                        class="input__label pick__team" draggable="true">
-                        {{form.away_team_points.label}}
-                    </label>
-                    <select name="form-{{forloop.counter0}}-away_team_points" 
-                    id="form-{{forloop.counter0}}-away_team_points" data-location="away"
-                    class="input__select{% if form.home_team_points.errors %} input__error{% endif %}">
-                      {% for value, choice in form.fields.away_team_points.choices %} 
-                        {% if value == form.away_team_points.value %}
-                                <option value="{{ value }}" selected>{{ choice }}</option>
-                            {% else %}
-                                <option value="{{ value }}">{{ choice }}</option>
-                            {% endif %}
-                      {% endfor %}
-                    </select>
-                    <label for="form-{{forloop.counter0}}-home_team_points" 
-                        class="input__label pick__team" draggable="true">
-                        {{ form.home_team_points.label }}
-                    </label>
-                    <select name="form-{{forloop.counter0}}-home_team_points" 
-                    id="form-{{forloop.counter0}}-home_team_points" data-location="home"
-                    class="input__select{% if form.home_team_points.errors %} input__error{% endif %}">
-                        {% for value, choice in form.fields.home_team_points.choices %} 
-                            {% if value == form.home_team_points.value %}
-                                <option value="{{ value }}" selected>{{ choice }}</option>
-                            {% else %}
-                                <option value="{{ value }}">{{ choice }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                    {{ form.game_id.as_hidden }}
-                    {{ form.away_team_id.as_hidden }}
-                    {{ form.home_team_id.as_hidden }}
-                    {{ form.pick_id.as_hidden }}
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
         {{formset.management_form}}
         <div class="pick__action-row">

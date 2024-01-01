@@ -1,12 +1,16 @@
 'use strict';
 
 const team_list = document.querySelectorAll('.input__select');
+const listDisplay = document.querySelectorAll('.pick__list-item');
+
+const gameCount = listDisplay.length;
 
 const clearPoint = (team) => (team.value = -1);
 
 const checkGameSelection = (team) => {
     const location = team.dataset.location === 'away' ? 'home' : 'away';
     const game_teams = team.parentElement.querySelectorAll(':scope > select');
+
     game_teams.forEach((team) => {
         if (team.dataset.location === location && team.value > 0) {
             // removeListTeam(ct.previousElementSibling.textContent);
@@ -14,6 +18,7 @@ const checkGameSelection = (team) => {
             clearPoint(team);
         }
     });
+
     if (team.value > -1) {
         team_list.forEach((teams) => {
             if (team.value === teams.value)
@@ -56,21 +61,26 @@ const checkGamePick = (team) => {
     // checkGameGrid(choice);
 };
 
-const checkPick = (team) => {
-    checkGamePick(team);
-    setBackground(team);
-};
+function setList(team) {
+    listDisplay.forEach((item) => {
+        const spans = item.getElementsByTagName('span');
+        if (spans[1].innerText === team.previousElementSibling.innerText) {
+            spans[1].innerText = '';
+        }
+    });
 
-team_list.forEach((team) =>
-    team.addEventListener('change', function (e) {
-        checkPick(team);
-    })
-);
+    const replaceTeamText = listDisplay[gameCount - team.value].getElementsByTagName('span');
+    replaceTeamText[1].innerText = team.previousElementSibling.innerText;
+}
 
 const init = () => {
     team_list.forEach((team) => {
         setBackground(team);
-        console.log('12');
+        team.addEventListener('change', function (e) {
+            checkGamePick(team);
+            setBackground(team);
+            setList(team);
+        });
     });
 };
 

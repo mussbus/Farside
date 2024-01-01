@@ -7,8 +7,6 @@
             gap: 2.4rem;
         }
     }
-    &__choice {
-    }
 
     &__date {
         grid-column: full-start / full-end;
@@ -18,14 +16,20 @@
         font-weight: 600;
     }
 
+    &__flexbox {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 20rem;
+        align-items: start;
+    }
+
     &__game {
         background-color: $color-grey-light-1;
         border-radius: 1rem;
         padding: 0.8rem 1.6rem;
         box-shadow: 0rem 1rem 2rem rgba(red, 0.8);
         font-size: $default-font-size;
-        // border: 0.2rem solid $color-black;
-        // outline: 0.3rem solid $color-primary;
         outline: 0.3rem solid red;
 
         &-valid {
@@ -33,7 +37,37 @@
             outline: 0.3rem solid green;
         }
     }
+
+    &__list {
+        min-width: 35rem;
+        flex-grow: 0;
+        font-size: 2.4rem;
+        display: flex;
+        flex-direction: column;
+        // gap: 0.8rem;
+        border: 0.3rem solid $color-black;
+        border-radius: 1rem;
+        padding: 1.2rem;
+        background-color: $color-grey-light-1;
+        box-shadow: 0rem 1rem 3rem rgba($color-black, 0.4);
+
+        &-item {
+            text-decoration: none;
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+            gap: 1.2rem;
+            align-items: end;
+            line-height: 1.7;
+
+            & > :nth-child(1) {
+                min-width: 3.5rem;
+            }
+        }
+    }
+
     &__schedule {
+        flex-grow: 1;
     }
     &__team {
         grid-column: left-start / center-end;

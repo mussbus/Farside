@@ -8,6 +8,12 @@ from django.contrib.auth.decorators import login_required
 import datetime
 import random
 from schedule.views import calculate_week_scores
+from django.contrib.auth.decorators import user_passes_test
+
+# user passes test functions
+
+def admin_check(user):
+    return not user.is_staff
 
 # Create your views here.
 
@@ -30,7 +36,7 @@ def add_team(request):
 # ----------------------------------------------------------------------------------------------------------
 
 def pick_game(request):
-    games_list = Game.objects.filter(game_id = 1)
+    qs_games = Game.objects.filter(game_id = 1)
   
     if request.method == 'POST':
         form = PickForm(request.POST)
@@ -47,19 +53,22 @@ def pick_game(request):
     else:
         form = PickForm()
     
-    return render(request, 'pick_game.html', context={'form':form, 'games_list': games_list})
+    return render(request, 'pick_game.html', context={'form':form, 'qs_games': qs_games})
 
 # ----------------------------------------------------------------------------------------------------------
-
+# @user_passes_test(lambda u: u.is_superuser)
+@login_required
 def pick_week(request, year, week):
-    week = Week.objects.get(season__year=year, week=week)
-    games_list = Game.objects.filter(week_id=week.week_id)
-    picks_list = Pick.objects.filter(week_id=week.week_id, user_id=request.user)
-    number_of_games = len(games_list)
+    q_week = Week.objects.get(season__year=year, week=week)
+    qs_games = Game.objects.filter(week_id=q_week.week_id)
+    qs_picks = Pick.objects.filter(week_id=q_week.week_id, user_id=request.user)
+    number_of_games = len(qs_games)
     pick_formset = formset_factory(PickForm, extra=number_of_games)
     formset = pick_formset(request.POST or None)
+    list_picks_display = ['' for _ in range(number_of_games)]
+    
     try:
-        tiebreaker_object = Tiebreaker.objects.get(week_id=week.week_id, user_id=request.user)
+        tiebreaker_object = Tiebreaker.objects.get(week_id=q_week.week_id, user_id=request.user)
     except Tiebreaker.DoesNotExist:
         tiebreaker_object = None
     
@@ -70,7 +79,7 @@ def pick_week(request, year, week):
         PICK_OPTIONS += [(f'{count}', f'{count}')]
         count += 1
   
-    for game, form in zip(games_list, formset):
+    for game, form in zip(qs_games, formset):
         form.fields['home_team_points'].choices = PICK_OPTIONS
         form.fields['away_team_points'].choices = PICK_OPTIONS
         form.fields['home_team_points'].label = f'{game.home_team.location} {game.home_team.name}'
@@ -79,7 +88,7 @@ def pick_week(request, year, week):
         form.fields['home_team_id'].initial = game.home_team.team_id
         form.fields['away_team_id'].initial = game.away_team.team_id
         
-        for pick in picks_list:
+        for pick in qs_picks:
             if pick.game.game_id == game.game_id:
                 if pick.team.team_id == game.away_team.team_id:
                     form.fields['away_team_points'].initial = f'{pick.value}'
@@ -94,8 +103,7 @@ def pick_week(request, year, week):
         if all([formset.is_valid(), form_tiebreaker.is_valid]):
             for form in formset:
                 pick_form = form.cleaned_data                
-                game_id = pick_form['game_id']
-                
+                game_id = pick_form['game_id']                
                 pick = Pick()
                 
                 if pick_form['pick_id'] > 0:
@@ -119,23 +127,36 @@ def pick_week(request, year, week):
             
             tiebreaker = form_tiebreaker.save(commit=False)
             tiebreaker.user = request.user
-            tiebreaker.game = games_list.last()
+            tiebreaker.game = qs_games.last()
             tiebreaker.week = week
             tiebreaker.submit_date = datetime.datetime.now()
             tiebreaker.save()
             
-            url_is = request.build_absolute_uri()
             return redirect(reverse('football:index'))
+        
+        else:
+            for form in formset:
+                pick_form = form.cleaned_data
+                macro = type(pick_form['game_id'])
+                q_game = qs_games.get(game_id=pick_form['game_id'])
+                
+                if int(form['away_team_points'].value()) > 0:
+                    list_picks_display[int(pick_form['away_team_points']) - 1] = q_game.away_team.full_name
+                else:
+                    list_picks_display[int(pick_form['home_team_points']) - 1] = q_game.home_team.full_name
+            
     else:
         form_tiebreaker = TiebreakerForm(None, instance=tiebreaker_object)
+        
+        for pick in qs_picks:
+            list_picks_display[pick.value - 1] = pick.team.full_name
       
-    game_form = zip(games_list, formset)
-    
-    
+    game_form = zip(qs_games, formset)
     
     return render(request, 'pick_week.html', context={'game_form': game_form, 
                                                         'form_tiebreaker': form_tiebreaker,
-                                                        'formset': formset})
+                                                        'formset': formset,
+                                                        'list_picks_display': list_picks_display})
 
 # ----------------------------------------------------------------------------------------------------------
 
@@ -162,7 +183,7 @@ def result_week(request, year, week):
     qs_game = Game.objects.order_by_time(week.week_id)
     
     list_user = list()
-    list_picks = list()
+    qs_picks = list()
     list_teams = list()    
     dict_season_rank = dict()
         
@@ -228,10 +249,10 @@ def result_week(request, year, week):
             except:
                 list_home_pick.append(' ')
                 
-        list_picks.append(list_away_pick) 
-        list_picks.append(list_home_pick)
+        qs_picks.append(list_away_pick) 
+        qs_picks.append(list_home_pick)
         
-    list_info = zip(list_teams, list_picks)
+    list_info = zip(list_teams, qs_picks)
     
     # if request.method == 'POST': 
     #     make_test_results()

@@ -91,6 +91,10 @@ body {
   text-align: center !important;
 }
 
+.u-right-text {
+  text-align: right !important;
+}
+
 .u-margin-bottom-small {
   margin-bottom: 1.5rem !important;
 }
@@ -195,7 +199,7 @@ button:disabled:hover {
 
 .container {
   max-width: 160rem;
-  margin: 0 auto;
+  max-width: 100vw;
   padding: 10rem;
   min-height: 80vh;
 }
@@ -8957,6 +8961,13 @@ readers do not read off random characters that represent icons */
   font-size: 1.8rem;
   font-weight: 600;
 }
+.pick__flexbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20rem;
+  align-items: start;
+}
 .pick__game {
   background-color: #f7f7f7;
   border-radius: 1rem;
@@ -8968,6 +8979,33 @@ readers do not read off random characters that represent icons */
 .pick__game-valid {
   box-shadow: 0rem 1rem 2rem rgba(0, 128, 0, 0.8);
   outline: 0.3rem solid green;
+}
+.pick__list {
+  min-width: 35rem;
+  flex-grow: 0;
+  font-size: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  border: 0.3rem solid #000;
+  border-radius: 1rem;
+  padding: 1.2rem;
+  background-color: #f7f7f7;
+  box-shadow: 0rem 1rem 3rem rgba(0, 0, 0, 0.4);
+}
+.pick__list-item {
+  text-decoration: none;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  gap: 1.2rem;
+  align-items: end;
+  line-height: 1.7;
+}
+.pick__list-item > :nth-child(1) {
+  min-width: 3.5rem;
+}
+.pick__schedule {
+  flex-grow: 1;
 }
 .pick__team {
   grid-column: left-start/center-end;

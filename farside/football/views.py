@@ -151,12 +151,14 @@ def pick_week(request, year, week):
         for pick in qs_picks:
             list_picks_display[pick.value - 1] = pick.team.full_name
       
-    game_form = zip(qs_games, formset)
+    form_game = zip(qs_games, formset)
     
-    return render(request, 'pick_week.html', context={'game_form': game_form, 
+    return render(request, 'pick_week.html', context={'form_game': form_game, 
                                                         'form_tiebreaker': form_tiebreaker,
                                                         'formset': formset,
-                                                        'list_picks_display': list_picks_display})
+                                                        'list_picks_display': list_picks_display,
+                                                        'year': year,
+                                                        'week': week})
 
 # ----------------------------------------------------------------------------------------------------------
 

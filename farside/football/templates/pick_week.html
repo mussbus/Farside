@@ -28,7 +28,7 @@
     </div>
 {% endif %}
 
-<h1 class="heading__primary">Farside - Week 1, 2023</h1>
+<h1 class="heading__primary">Farside - Week {{week}}, {{year}}</h1>
     <form method="POST">
         {% csrf_token %}
         <div class="pick__flexbox">
@@ -40,7 +40,7 @@
                 {% endfor %}
             </ul>
             <div class="grid grid__schedule pick__schedule u-margin-bottom-medium">
-                {% for game, form in game_form %}
+                {% for game, form in form_game %}
                     <div class="pick__game grid grid__game" data-game="{{game.game_id}}">
                         <div class="pick__date">
                             <span class="pick__day">{{game.game_time.day}}</span>

@@ -4,7 +4,7 @@ from football.models import Week
 
 def current_week_info(request):
   # current_time = datetime.datetime.now()
-  current_time = datetime.datetime(2023, 9, 9, 0, 0, 0)
+  current_time = datetime.datetime(2022, 12, 9, 0, 0, 0)
   # current_week_url_exist = request.session.get('current_week_url', False)
   boo_current_week = False
   if not boo_current_week:

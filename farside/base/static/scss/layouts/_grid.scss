@@ -1,6 +1,14 @@
 .grid {
     display: grid;
 
+    &__dashboard {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(5, 16rem);
+        gap: 3.2rem;
+        height: 100%;
+    }
+
     &__schedule {
         grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
         align-content: start;

@@ -1,0 +1,53 @@
+.dashboard {
+    &__box {
+        // border: 2px solid $color-black;
+        background-color: $color-grey-light-2;
+        border-radius: 2rem;
+        padding: 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
+        overflow: hidden;
+
+        &.big {
+            grid-column: span 2;
+            grid-row: span 3;
+        }
+
+        &.small {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+    }
+
+    &__flex {
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+        max-height: 100%;
+    }
+
+    &__games {
+        display: flex;
+        flex-wrap: wrap;
+
+        &-game {
+            flex: 1 0 34%;
+        }
+    }
+
+    &__previous {
+        display: grid;
+        grid-template-columns: 1fr 10fr 1fr;
+    }
+
+    &__season {
+        &-total {
+            overflow-y: scroll;
+            max-height: 100%;
+            background-color: #fff;
+            padding-inline: 2rem;
+        }
+    }
+}

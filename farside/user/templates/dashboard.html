@@ -1,0 +1,70 @@
+{% extends 'base_main.html' %}
+
+{% load static %}
+
+{% block title %}Dashboard{% endblock %} 
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/dashboard.js' %}" type="text/javascript"></script>    
+{% endblock %}
+
+{% block content %}
+
+<h1 class="heading__primary">Dashboard</h1>
+    <div class="grid grid__dashboard u-margin-bottom-medium">
+        <div class="dashboard__box small">
+            <div class="dashboard__flex">
+                <h3 class="heading__tertiary u-center-text">Schedule</h3>
+                <div class="dashboard__games">
+                    {% for game in qs_games %}
+                        <span class="dashboard__games-game u-center-text">
+                            {{game.away_team.abbreviation}} at {{game.home_team.abbreviation}}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="dashboard__box small">
+            <div class="dashboard__flex">
+                <h3 class="heading__tertiary u-center-text">Last Week</h3>
+                <ul>
+                    {% for total in list_total %}
+                        <li class="dashboard__previous">
+                            <span>{{total.index}}.</span>
+                            <span>{{total.name}}</span>                        
+                            <span class="u-right-text">{{total.total}}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="dashboard__box small">
+            3
+        </div>
+        <div class="dashboard__box small">
+            Profile
+        </div>
+        <div class="dashboard__box big">
+            <div class="dashboard__flex">
+                <h3 class="heading__tertiary u-center-text">{{current_year}} Season Standings</h3>
+                <ul class="dashboard__season-total">
+                    {% for user in list_user %}
+                        <li class="dashboard__previous">
+                            <span>{{user.season_rank}}.</span>
+                            <span>{{user.name}}</span>                        
+                            <span class="u-right-text">{{user.season_total}}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="dashboard__box big">
+            <canvas id="season__rank" style="width:100%;height:100%;"></canvas>
+        </div>
+    </div>
+
+    <script>
+        createChart({{dict_season_rank|safe}});
+    </script>
+{% endblock %}
